@@ -1,0 +1,34 @@
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets.*
+
+# Private source material and exports
+raw/
+private/
+exports/
+data/
+*.jsonl
+*.zip
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated and local files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

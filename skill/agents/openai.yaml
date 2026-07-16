@@ -1,0 +1,4 @@
+interface:
+  display_name: "Calm Agent"
+  short_description: "An adaptive, calm, evidence-aware communication layer for AI agents."
+  default_prompt: "Use $calm-agent to adapt tone, judgment, and rigor to this moment while preserving evidence and my voice."
