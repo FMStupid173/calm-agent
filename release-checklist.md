@@ -19,12 +19,17 @@
 - [x] Public failure reports require a minimal redacted example.
 - [x] Privacy and private security-reporting guidance are included.
 - [x] Release packaging scans both the source tree and generated archive.
+- [x] Calibration Copilot unit tests pass: 15 tests for Preview 3.
+- [x] Dynamic validator includes the calibration contracts and passes: 62 contracts.
+- [x] `calibrator/runs/` and `calibrator/config.local.json` are absent from the release archive.
+- [x] Live DeepSeek smoke status is explicit: not run because no API key was available.
+- [x] No adapter is described as calibrated without holdout results and a human approval record.
 
 ## Release Positioning
 
 Use:
 
-> A portable output-quality layer for calmer, clearer, less templated AI responses, with explicit rules for human cadence, semantic fidelity, and evidence boundaries.
+> A Dynamic Human Layer for adaptive voice, semantic fidelity, source fit, and evidence-aware AI responses, with a semi-automatic cross-model Calibration Copilot.
 
 Avoid:
 
@@ -32,7 +37,22 @@ Avoid:
 - promising that every AI will sound identical;
 - claiming perfect semantic preservation;
 - presenting historical adapter scores as current cross-model proof;
+- calling a model-judge result automatic proof of human preference;
+- implying ChatGPT or Gemini web output generation is automated without an API integration;
+- claiming a live DeepSeek calibration when only mocked tests were run;
 - calling private conversation data a public training dataset.
+
+## Calibration Gate
+
+Before promoting a proposed adapter:
+
+- keep the source adapter unchanged;
+- generate or import baseline and candidate outputs;
+- keep holdout prompts hidden from the proposer;
+- require zero configured hard failures;
+- reject composite or reliability-guardrail regressions;
+- perform a blind, order-swapped human A/B review;
+- record `human-approval.json` before claiming calibration.
 
 ## First Real-User Check
 

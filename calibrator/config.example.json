@@ -1,0 +1,40 @@
+{
+  "run_name": "deepseek-v4-flash-focused-v1",
+  "adapter": "adapters/deepseek-system-prompt.md",
+  "dataset": {
+    "path": "evals/focused-regression-v2.md",
+    "section": "Clean Prompt Batch",
+    "holdout_ratio": 0.3,
+    "seed": "calm-agent-calibration-v1"
+  },
+  "target": {
+    "provider": "deepseek",
+    "base_url": "https://api.deepseek.com",
+    "model": "deepseek-v4-flash",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "thinking": "disabled",
+    "temperature": 0.2,
+    "max_tokens": 2048,
+    "timeout_seconds": 180,
+    "max_retries": 3
+  },
+  "judge": {
+    "provider": "deepseek",
+    "base_url": "https://api.deepseek.com",
+    "model": "deepseek-v4-pro",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "thinking": "disabled",
+    "temperature": 0.0,
+    "max_tokens": 1400,
+    "timeout_seconds": 180,
+    "max_retries": 3
+  },
+  "thresholds": {
+    "max_hard_failures": 0,
+    "min_holdout_pass_rate": 0.7,
+    "min_holdout_accepted_rate": 0.85,
+    "min_holdout_composite_delta": 0.0,
+    "max_guardrail_regression": 0.0,
+    "max_adapter_words": 900
+  }
+}

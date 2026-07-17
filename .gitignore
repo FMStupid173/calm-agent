@@ -21,6 +21,8 @@ data/
 *.sqlite3
 
 # Generated and local files
+calibrator/runs/
+calibrator/config.local.json
 __pycache__/
 *.py[cod]
 .pytest_cache/

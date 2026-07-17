@@ -34,6 +34,8 @@ Repository: `https://github.com/FMStupid173/calm-agent`. Use one strong before/a
 >
 > For coding and research, inspect-before-claiming, source-fit checks, volatile-fact verification, and uncertainty boundaries are designed to reduce avoidable hallucinations. They do not guarantee correctness or replace retrieval.
 >
+> Preview 3 adds Calibration Copilot: DeepSeek can run through its API, while ChatGPT/Gemini web outputs can be imported for failure profiling, holdout validation, and human-approved adapter suggestions. The code is locally validated; live cross-model calibration evidence is still pending.
+>
 > Current evidence: the Codex-focused regression accepted 29/30 cases. Cross-model adapters remain previews and need fresh real-user runs.
 >
 > The most useful contribution is a minimal redacted failure example from a real workflow. Please use the Output failure report template and never post credentials or private conversations.

@@ -20,8 +20,13 @@ $zip = [System.IO.Compression.ZipFile]::Open($archivePath, [System.IO.Compressio
 try {
     $files = Get-ChildItem -LiteralPath $projectPath -Recurse -File | Where-Object {
         $_.FullName -notmatch '[\\/]\.git[\\/]' -and
+        $_.FullName -notmatch '[\\/]calibrator[\\/]runs[\\/]' -and
+        $_.FullName -notmatch '[\\/]calibrator[\\/]config\.local\.json$' -and
+        $_.FullName -notmatch '[\\/](?:raw|private|exports|data)[\\/]' -and
+        $_.Name -notmatch '^\.env(?:\..+)?$' -and
+        $_.Name -notmatch '^(?:credentials.*\.json|secrets(?:\..*)?)$' -and
         $_.FullName -notmatch '[\\/]__pycache__[\\/]' -and
-        $_.Extension -notin '.pyc', '.zip'
+        $_.Extension -notin '.pyc', '.zip', '.jsonl', '.pem', '.key', '.p12', '.pfx', '.db', '.sqlite', '.sqlite3'
     }
     foreach ($file in $files) {
         $relative = $file.FullName.Substring($projectPath.Length + 1).Replace('\', '/')

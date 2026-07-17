@@ -11,6 +11,8 @@
 
 Upload only the versioned archive produced by the packaging script and its `.sha256` file.
 
+For Preview 3, run the Calibration Copilot unit suite and a three-item API smoke test before claiming live DeepSeek support. Without an API key, describe it as code-validated and awaiting a live provider run.
+
 ## V2EX Draft
 
 **Title**

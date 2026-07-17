@@ -27,6 +27,11 @@ def main() -> int:
         "evals/model-adapter-matrix.md",
         "evals/real-user-feedback-template.csv",
         "adapters/universal-copy-paste-prompt.md",
+        "calibrator/calibrate.py",
+        "calibrator/config.example.json",
+        "calibrator/prompts/judge-system.md",
+        "calibrator/prompts/propose-system.md",
+        "calibrator/README.md",
         "release-checklist.md",
         "VERSION",
     ]
@@ -87,6 +92,30 @@ def main() -> int:
             "Never claim to have browsed",
             "cannot add browsing, code execution, persistent memory, or retrieval capabilities",
             "does not guarantee factual correctness",
+        ],
+        "calibrator/calibrate.py": [
+            "exact_split_ids",
+            "proposal_context",
+            "candidate_guardrail_violations",
+            "benchmark prompt signatures",
+            "needs-human-review",
+            "The production adapter was not modified",
+            "environment variable",
+        ],
+        "calibrator/prompts/propose-system.md": [
+            "training failures",
+            "must not request or infer holdout answers",
+            "Do not paste benchmark prompts",
+        ],
+        "calibrator/README.md": [
+            "never overwrites a production adapter",
+            "DEEPSEEK_API_KEY",
+            "Web Models Without API Access",
+        ],
+        "scripts/package-release.ps1": [
+            "calibrator[\\\\/]runs",
+            "config\\.local\\.json",
+            "credentials.*\\.json",
         ],
         "evals/style-lint-rules.md": [
             "semantic-invention",

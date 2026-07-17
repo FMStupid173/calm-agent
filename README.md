@@ -18,6 +18,8 @@ It can run as a native Skill or as a copy-paste prompt.
 
 **Reliability boundary:** Calm Agent is designed to reduce avoidable hallucinations and improve source selection, claim checking, and uncertainty handling. It cannot guarantee factual correctness, repair a weak search index, or replace the base model's reasoning and retrieval tools.
 
+**Cross-model calibration:** Calibration Copilot can run DeepSeek through its API or import outputs from ChatGPT, Gemini, and other web models. It profiles model-specific failures, proposes a minimal adapter candidate from training failures, validates it on a hidden holdout split, and requires human approval before promotion.
+
 **Status: `v0.1-preview`.** The current core skill has fresh Codex validation. The web adapters are available for testing, but their older scores do not prove that the latest core behavior transfers unchanged to every model.
 
 ## The Innovation: Dynamic Human Layer
@@ -192,13 +194,13 @@ evals/
   gemini-targeted-runtime-review-v2.3.md
   gemini-priority-regression-v2.4.md
   gemini-priority-runtime-review-v2.4.md
-    human-taste-holdout-v1.md
-    multi-turn-human-v1.md
-    focused-regression-v2.md
-    codex-multi-turn-ab-v1-review.md
-    codex-focused-regression-v2-review.md
-    model-adapter-matrix.md
-    house-style-audit.md
+  human-taste-holdout-v1.md
+  multi-turn-human-v1.md
+  focused-regression-v2.md
+  codex-multi-turn-ab-v1-review.md
+  codex-focused-regression-v2-review.md
+  model-adapter-matrix.md
+  house-style-audit.md
   codex-final-acceptance-test.md
   codex-final-acceptance-review.md
   scoring-rubric.md
@@ -210,6 +212,11 @@ benchmark-agent/
   single-rater-sheet.md
   summarize_results.py
   validate_dynamic_layer.py
+calibrator/
+  calibrate.py
+  config.example.json
+  prompts/
+  tests/
 release-checklist.md
 VERSION
 ```
@@ -240,6 +247,18 @@ Suggested starting points:
 Use `examples/bad-to-better.md` when a model understands the rules but still sounds wrong.
 
 Use `examples/preference-pairs.md` when you need to improve taste without more reference conversation samples.
+
+## Calibration Copilot
+
+Use [Calibration Copilot](calibrator/README.md) when the same core prompt behaves differently across models.
+
+- DeepSeek API can generate, judge, and propose a candidate adapter automatically.
+- ChatGPT, Gemini, and other web models can enter through `responses.csv` when no API or Skill surface is available.
+- The proposer sees training failures only. Holdout answers remain unavailable until comparison.
+- Hard failures or regressions in semantic fidelity, evidence hygiene, source fit, and verification block the candidate.
+- A passing automated gate still requires blind human A/B approval.
+
+Calibration Copilot is currently **code-validated without a live DeepSeek API run**. Set `DEEPSEEK_API_KEY` locally and start with `--limit 3` before a full paid run.
 
 ## Give Useful Feedback
 
@@ -334,3 +353,4 @@ For product positioning and source-backed user pain, see [docs/market-pain-evide
 - Codex has fresh validation for this preview. ChatGPT, Gemini, DeepSeek, and Cursor need fresh runs with their current adapters before making cross-model performance claims.
 - A real persistent-memory mechanism changes the correct answer to memory tests. Capability evaluations must control whether storage tools are available.
 - Calm Agent can improve output selection and boundaries; it cannot replace the base model's reasoning, retrieval quality, or safety system.
+- Calibration with the same model family as both target and judge can create correlated bias. Keep human review and, when possible, use an independent judge.

@@ -14,6 +14,12 @@ Date: 2026-07-16
 
 Historical adapter reviews remain useful for regression hypotheses. They are not evidence for the latest core rules because the Dynamic Human Layer, proposition lock, citation metadata gate, and initiative gate changed afterward.
 
+## Calibration Route
+
+`calibrator/calibrate.py` can run DeepSeek through its API. ChatGPT, Gemini, and other web-only surfaces enter through manually collected `responses.csv` outputs. The current Calibration Copilot has local unit and contract validation; a live DeepSeek API calibration and fresh cross-model web imports remain pending.
+
+No adapter is promoted automatically. A candidate must pass holdout gates and receive a recorded blind human review.
+
 ## Promotion Rule
 
 Promote a platform from `unverified` only after:

@@ -34,6 +34,7 @@ function Test-Text {
 $files = Get-ChildItem -LiteralPath $rootPath -Recurse -File | Where-Object {
     $_.FullName -ne $selfPath -and
     $_.FullName -notmatch '[\\/]\.git[\\/]' -and
+    $_.FullName -notmatch '[\\/]calibrator[\\/]runs[\\/]' -and
     $_.FullName -notmatch '[\\/]__pycache__[\\/]' -and
     $textExtensions -contains $_.Extension.ToLowerInvariant()
 }
