@@ -1,12 +1,37 @@
 # Calm Agent
 
-A calm, clear, bounded communication style for AI agents.
+**A Dynamic Human Layer for AI agents.**
 
-Calm Agent packages portable rules and adapters for ChatGPT, Codex, Gemini, DeepSeek, Cursor, and other assistants, aiming for output that is less oily, less generic, and more quietly useful.
+Calm Agent gives ChatGPT, Codex, Gemini, DeepSeek, Cursor, and other assistants a task-sensitive response policy. It silently reads the moment, stakes, emotional temperature, and allowed transformation, then adjusts directness, warmth, length, structure, writing freedom, and evidence requirements.
 
-It does not make an AI pretend to be Claude. It turns the qualities people often like in Claude-style interaction into portable rules: plain judgment, emotional proportion, low-hype writing, and careful boundaries.
+The same layer supports five different kinds of work:
+
+- conversation that stays natural without default praise or service-desk language;
+- writing help that protects the user's meaning, intensity, and voice;
+- emotional support with proportion, boundaries, and no automatic therapy script;
+- coding that inspects files, errors, and tests before making consequential claims;
+- research that chooses sources fit for the claim, verifies unstable facts, and separates confirmed facts, inference, and unknowns.
+
+It can run as a native Skill or as a copy-paste prompt. It does not make an AI pretend to be Claude or imitate proprietary internals.
+
+**Reliability boundary:** Calm Agent is designed to reduce avoidable hallucinations and improve source selection, claim checking, and uncertainty handling. It cannot guarantee factual correctness, repair a weak search index, or replace the base model's reasoning and retrieval tools.
 
 **Status: `v0.1-preview`.** The current core skill has fresh Codex validation. The web adapters are available for testing, but their older scores do not prove that the latest core behavior transfers unchanged to every model.
+
+## The Innovation: Dynamic Human Layer
+
+Most style prompts impose one fixed persona. Calm Agent builds a small response contract for each turn.
+
+The router classifies:
+
+- moment: casual, judgment, writing, emotional, coding, or research;
+- stakes: low, medium, or high;
+- emotional temperature: cool, warm, or distressed;
+- transformation freedom: exact, restrained, or open.
+
+Those signals control length, directness, warmth, density, literary texture, initiative, and the evidence gate. When goals compete, the order is: truth and safety, current-message constraints, semantic fidelity, active taste profile, then cadence and polish.
+
+This prevents a single "friendly" voice from leaking into every task. A tired user does not receive a research memo; a coding diagnosis does not trade verification for warmth; an exact rewrite does not gain invented details just to sound human.
 
 ## Before / After
 
@@ -38,8 +63,19 @@ It does not make an AI pretend to be Claude. It turns the qualities people often
 
 > 很多时候，答案其实已经很清楚了。难的是承认之后，你就没法继续拖着、绕着，或者假装还有别的可能。所以我们说“我还没想好”。那句话有时是在给自己留一点时间。
 
+---
+
+**Generic AI**
+
+> Research shows that users prefer restrained AI responses, so this is a proven market need.
+
+**Calm Agent**
+
+> I would not write “research shows” without a source. Treat this as a product hypothesis until primary research or real usage evidence supports it.
+
 ## What It Optimizes For
 
+- Moment-by-moment adaptation instead of one fixed persona
 - Clear answers without hype
 - Warmth without performance
 - Writing that keeps the user's voice
@@ -49,6 +85,7 @@ It does not make an AI pretend to be Claude. It turns the qualities people often
 - Less template phrasing
 - Human cadence for answers that are correct but still feel trained
 - Reliability for coding, research, and product judgment
+- Source fit, volatile-fact verification, and calibrated uncertainty
 
 ## What It Avoids
 
@@ -63,20 +100,19 @@ It does not make an AI pretend to be Claude. It turns the qualities people often
 - Confident claims without evidence
 - Guessing code behavior without inspection
 
-## Dynamic Human Layer
+## Reliability And Source Fit
 
-Calm Agent now adapts its response contract to the moment instead of forcing one fixed calm voice.
+For coding and research, the Dynamic Human Layer raises the evidence gate instead of applying conversational softness everywhere.
 
-The router classifies:
+- **Inspect before claiming:** read code, logs, files, docs, or sources before diagnosing.
+- **Match source to claim:** prefer official docs for APIs, source and tests for code behavior, primary papers for research, and direct user evidence for product demand.
+- **Verify volatile facts:** current prices, versions, laws, model availability, and API parameters require live official checks.
+- **Check claim fidelity:** a real citation still fails when it supports a different version, population, region, or conclusion.
+- **Expose uncertainty cleanly:** distinguish confirmed facts, reasonable inference, and unknowns without turning every answer into a compliance memo.
 
-- moment: casual, judgment, writing, emotional, coding, or research
-- stakes: low, medium, or high
-- emotional temperature: cool, warm, or distressed
-- transformation freedom: exact, restrained, or open
+These controls reduce common hallucination paths: guessing from an error title, citing a plausible but mismatched source, inventing bibliographic metadata, and presenting remembered current values as verified facts.
 
-When rules compete, it keeps this order: truth and evidence, current-message constraints, semantic fidelity, active taste profile, then cadence and polish.
-
-Use `skill/profiles/taste-profile-template.md` to set directness, warmth, density, literary texture, challenge level, and initiative from `0` to `3`. Current-message instructions override the reusable profile. The skill never claims persistent memory unless a real profile or memory source is available.
+Use `skill/profiles/taste-profile-template.md` to set directness, warmth, density, literary texture, challenge level, and initiative from `0` to `3`. Current-message instructions override the reusable profile.
 
 ## Project Structure
 
@@ -102,6 +138,7 @@ skill/
     taste-profile-template.md
 adapters/
   model-adapter-guide.md
+  universal-copy-paste-prompt.md
   chatgpt-custom-instructions.md
   chatgpt-strict.md
   cursor-rules.md
@@ -182,7 +219,9 @@ For Codex or skill-compatible agents, use `skill/`.
 
 For other tools, copy the relevant file from `adapters/`.
 
-Start with `adapters/generic-system-prompt.md` if you are unsure.
+If the platform cannot install Skills, paste `adapters/universal-copy-paste-prompt.md` into its system instructions, custom instructions, Gem, or the first message of a fresh conversation.
+
+Start with `adapters/generic-system-prompt.md` when you need a shorter system prompt.
 
 Optionally append a completed `skill/profiles/taste-profile-template.md`. Use a profile for reusable preferences; use the current message for one-off overrides.
 
@@ -195,6 +234,7 @@ Suggested starting points:
 - DeepSeek: `adapters/deepseek-system-prompt.md`
 - Cursor: `adapters/cursor-rules.md`
 - Unknown model: `adapters/generic-system-prompt.md`
+- Any web AI without Skill support: `adapters/universal-copy-paste-prompt.md`
 
 Use `examples/bad-to-better.md` when a model understands the rules but still sounds wrong.
 

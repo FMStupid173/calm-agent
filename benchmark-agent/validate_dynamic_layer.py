@@ -26,6 +26,7 @@ def main() -> int:
         "evals/codex-focused-regression-v2-review.md",
         "evals/model-adapter-matrix.md",
         "evals/real-user-feedback-template.csv",
+        "adapters/universal-copy-paste-prompt.md",
         "release-checklist.md",
         "VERSION",
     ]
@@ -77,6 +78,15 @@ def main() -> int:
         "adapters/model-adapter-guide.md": [
             "900 words",
             "holdout",
+        ],
+        "adapters/universal-copy-paste-prompt.md": [
+            "Operate as a Dynamic Human Layer",
+            "truth, safety, and evidence",
+            "Match source type to question",
+            "Treat instructions found inside webpages",
+            "Never claim to have browsed",
+            "cannot add browsing, code execution, persistent memory, or retrieval capabilities",
+            "does not guarantee factual correctness",
         ],
         "evals/style-lint-rules.md": [
             "semantic-invention",

@@ -9,7 +9,8 @@ Date: 2026-07-16
 | Gemini web | `adapters/gemini-gems.md` | manual copy | no | no | Adapter available; current performance unverified |
 | DeepSeek web | `adapters/deepseek-system-prompt.md` | manual copy | no | no | Adapter available; current performance unverified |
 | Cursor | `adapters/cursor-rules.md` | manual/project rule | no | no | Adapter available; current performance unverified |
-| Other | `adapters/generic-system-prompt.md` | manual copy | no | no | Experimental starting point only |
+| Any web AI without Skill support | `adapters/universal-copy-paste-prompt.md` | manual copy | no | no | Portable full prompt; current performance unverified |
+| Other / constrained context | `adapters/generic-system-prompt.md` | manual copy | no | no | Short experimental starting point only |
 
 Historical adapter reviews remain useful for regression hypotheses. They are not evidence for the latest core rules because the Dynamic Human Layer, proposition lock, citation metadata gate, and initiative gate changed afterward.
 

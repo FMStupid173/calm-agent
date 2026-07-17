@@ -1,6 +1,6 @@
 # Model Adapter Guide
 
-Calm Agent should work across AI systems by separating the style core from model-specific failure modes.
+Calm Agent ports its Dynamic Human Layer across AI systems by separating the shared moment router, priority order, and evidence gates from model-specific failure modes.
 
 ## Portable Core
 
@@ -62,7 +62,7 @@ If the answer contains more than one contrast marker, rewrite it once.
 
 ## Release Positioning
 
-Describe Calm Agent as a portable output-quality layer, not a model clone.
+Describe Calm Agent as a portable Dynamic Human Layer for adaptive communication and evidence-aware output. Do not describe it as a model clone or claim guaranteed hallucination elimination.
 
 Good:
 

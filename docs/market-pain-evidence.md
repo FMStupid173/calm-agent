@@ -77,11 +77,15 @@ Product inference: demand for style control exists, but the `humanizer` label is
 
 Recommended:
 
-> A portable output-quality layer for less templated, less sycophantic, more evidence-aware AI responses.
+> A portable Dynamic Human Layer that adapts voice, semantic fidelity, and evidence requirements to each task.
 
 Chinese:
 
-> 一套跨模型的 AI 输出质量层：少套话、少迎合、保留原意，该查证时查证。
+> 一套跨模型的动态人味层：根据聊天、写作、情绪、coding 和 research 动态调整表达与证据门槛。
+
+Reliability claim:
+
+> Designed to reduce avoidable hallucinations and improve source fit, claim verification, and uncertainty handling. It does not guarantee correctness or replace the host model's retrieval system.
 
 Avoid:
 

@@ -6,17 +6,17 @@ Repository: `https://github.com/FMStupid173/calm-agent`. Use one strong before/a
 
 **Chinese**
 
-> 一套跨模型的 AI 输出质量层：少套话、少迎合、保留原意，该查证时查证。
+> 一套跨模型的动态人味层：根据聊天、写作、情绪、coding 和 research，动态调整表达、语义保真与证据门槛。
 
 **English**
 
-> A portable output-quality layer for less templated, less sycophantic, more evidence-aware AI responses.
+> A portable Dynamic Human Layer that adapts voice, semantic fidelity, and evidence requirements to each task.
 
 ## GitHub
 
 **Description**
 
-> Portable rules, adapters, and evals for calmer, less templated, more evidence-aware AI responses.
+> Dynamic Human Layer for adaptive voice, semantic fidelity, and evidence-aware AI responses.
 
 **Topics**
 
@@ -28,9 +28,11 @@ Repository: `https://github.com/FMStupid173/calm-agent`. Use one strong before/a
 
 **Release body**
 
-> First public preview of Calm Agent, a portable output-quality layer for AI assistants.
+> Public preview of Calm Agent, a portable Dynamic Human Layer for AI assistants.
 >
-> It includes a Codex skill, adapters for ChatGPT/Gemini/DeepSeek/Cursor, dynamic human-cadence rules, semantic-fidelity constraints, coding and research rigor guidance, adversarial prompts, and benchmark tooling.
+> It routes every turn by moment, stakes, emotional temperature, and transformation freedom, then adapts voice, structure, semantic fidelity, and evidence requirements. The package includes a Codex skill, a universal copy-paste prompt, model adapters, adversarial prompts, and benchmark tooling.
+>
+> For coding and research, inspect-before-claiming, source-fit checks, volatile-fact verification, and uncertainty boundaries are designed to reduce avoidable hallucinations. They do not guarantee correctness or replace retrieval.
 >
 > Current evidence: the Codex-focused regression accepted 29/30 cases. Cross-model adapters remain previews and need fresh real-user runs.
 >
@@ -40,18 +42,21 @@ Repository: `https://github.com/FMStupid173/calm-agent`. Use one strong before/a
 
 **Title**
 
-> 我把“AI 说话太油、太满、太像客服”整理成了一个可测试的开源 Skill
+> 我给 AI 做了一个会按场景调整人味和严谨度的开源 Skill
 
 **Body**
 
 > 我经常遇到一种情况：AI 的答案大体正确，但开头先夸一句，中间列一排标题，结尾再总结一次。让它润色文字时，句子变顺了，原来的声音也没了；做 coding 和 research 时，它又可能把猜测说得很确定。
 >
-> 我把这些问题整理成了 Calm Agent。它是一套跨模型的输出质量约束，主要做四件事：
+> 我把这些问题整理成了 Calm Agent。它的核心是 Dynamic Human Layer：先判断当前属于聊天、写作、情绪、coding 还是 research，再生成这一轮的回答契约。
 >
-> - 少套话、少迎合，先给真实判断；
-> - 根据聊天、写作、情绪、coding、research 动态调整语气和结构；
-> - 改写时尽量锁住原意，不把人的话磨成统一 AI 腔；
-> - 涉及事实、API、论文和市场信息时，区分已确认、推断和未知。
+> - 聊天：控制结构和客服腔，让交流自然一点；
+> - 写作：锁住原意、强度和个人声音；
+> - 情绪：按状态调整温度与建议分量；
+> - coding：先看代码、日志和测试，再判断；
+> - research：选对来源，核验易变事实，区分已确认、推断和未知。
+>
+> 这些可靠性规则能减少一部分可避免的幻觉，也能改善搜索资料与问题的匹配度。它不能保证永远正确，底层模型没有搜索能力时也不会凭空获得搜索能力。
 >
 > Codex 版本刚完成一轮 30 题回归，29 题通过或可接受。ChatGPT、Gemini、DeepSeek adapter 仍是 preview，我想拿真实使用来继续校准。
 >
@@ -63,13 +68,13 @@ Repository: `https://github.com/FMStupid173/calm-agent`. Use one strong before/a
 
 **Title**
 
-> Show HN: Calm Agent - a portable output-quality layer for AI responses
+> Show HN: Calm Agent - a Dynamic Human Layer for adaptive, evidence-aware AI responses
 
 **Body**
 
-> I built Calm Agent after repeatedly seeing answers that were correct enough but still unpleasant to use: automatic praise, support-desk phrasing, excessive headings, semantic drift during rewriting, and confident claims without evidence.
+> I built Calm Agent around a Dynamic Human Layer: a small response contract generated for each turn from the moment, stakes, emotional temperature, and allowed transformation.
 >
-> It packages a Codex skill, portable adapters, anti-patterns, task-sensitive response rules, and adversarial evals. It covers conversation and writing, but also adds evidence and uncertainty boundaries for coding and research.
+> Conversation stays light, writing preserves voice, emotional support keeps proportion, coding inspects before claiming, and research raises the evidence gate. Source-fit checks and volatile-fact verification are designed to reduce avoidable hallucinations without claiming guaranteed correctness.
 >
 > The current Codex regression accepted 29/30 cases. The ChatGPT, Gemini, DeepSeek, and Cursor adapters are previews; I am explicitly not treating old scores as current cross-model proof.
 >
@@ -83,15 +88,15 @@ Check the community rules before posting. Lead with the observed problem and inv
 
 **Title**
 
-> I turned my “stop sounding like support copy” instructions into a tested, cross-model style layer
+> I built a Dynamic Human Layer that changes voice and evidence rules by task
 
 **Body**
 
 > I kept rewriting the same custom instructions: stop praising every idea, stop turning simple answers into five sections, preserve my wording when editing, and verify current facts instead of adding a confident disclaimer.
 >
-> I turned that into Calm Agent: a portable set of adapters, anti-patterns, and evals for ChatGPT, Codex, Gemini, DeepSeek, and Cursor.
+> I turned that into Calm Agent: a portable Dynamic Human Layer for ChatGPT, Codex, Gemini, DeepSeek, and Cursor. It routes each turn as conversation, judgment, writing, emotional support, coding, or research, then adjusts tone, structure, transformation freedom, and the evidence gate.
 >
-> It is broader than a text humanizer. It changes the live conversation contract and includes semantic-fidelity and evidence-boundary rules for writing, coding, and research.
+> It includes semantic-fidelity rules for writing and inspect-before-claiming, source-fit, current-fact verification, and uncertainty rules for coding and research. These controls reduce avoidable hallucination paths; they do not guarantee factual correctness.
 >
 > https://github.com/FMStupid173/calm-agent
 >
@@ -115,9 +120,9 @@ Check the community rules before posting. Lead with the observed problem and inv
 
 ## X
 
-> AI answers often fail after they become technically acceptable: too much praise, too many headings, polished-away voice, confident claims without evidence.
+> I built a Dynamic Human Layer for AI: it changes voice, writing freedom, and evidence requirements according to the current task.
 >
-> I built Calm Agent as a portable output-quality layer for ChatGPT, Codex, Gemini, DeepSeek and Cursor.
+> Conversation stays natural. Writing keeps the user's voice. Coding and research inspect, verify, and choose sources that fit before claiming.
 >
 > Codex regression: 29/30 accepted. Cross-model adapters are still preview.
 >
@@ -127,9 +132,11 @@ Check the community rules before posting. Lead with the observed problem and inv
 
 ## 即刻
 
-> 我把自己反复写给 AI 的那几句要求做成了一个开源项目：别先夸我，别把简单问题写成五段，改文字时保留我的声音，不确定的事实别装确定。
+> 我给 AI 做了一层 Dynamic Human Layer：它会先判断你在聊天、写作、处理情绪、coding 还是 research，再调整这一轮的语气、结构、改写自由度和证据门槛。
 >
-> Calm Agent 现在包含 Codex Skill，以及 ChatGPT、Gemini、DeepSeek、Cursor 的适配文件，还带一套对抗测试。
+> 写作时它尽量保护原意；coding 和 research 时会要求先检查、选对来源、核验易变事实。它用于减少可避免的幻觉，也明确承认自己无法保证永远正确。
+>
+> Calm Agent 包含 Codex Skill、通用复制提示词、ChatGPT/Gemini/DeepSeek/Cursor 适配和对抗测试。
 >
 > https://github.com/FMStupid173/calm-agent
 >
@@ -139,15 +146,15 @@ Check the community rules before posting. Lead with the observed problem and inv
 
 **Cover**
 
-> 我受够了 AI 的客服腔
+> 我给 AI 做了一个“动态人味层”
 
 **Alternative cover**
 
-> 别再说“当然可以”了
+> 它会看场景决定怎么说
 
 **Title**
 
-> 我做了一个让 AI 少点套话、保留人味的开源 Skill
+> 我做了一个会动态调整“人味”的 AI Skill
 
 **Body**
 
@@ -155,7 +162,9 @@ Check the community rules before posting. Lead with the observed problem and inv
 >
 > 先夸你，再列五点；普通难过被说成心理咨询；一句原本有点笨、有点真的话，被润色成标准答案；不知道的资料也说得很确定。
 >
-> 所以我做了 Calm Agent。它会根据聊天、写作、情绪、coding 和 research 调整表达，也会提醒模型在该查证的时候查证。
+> 所以我做了 Calm Agent。它的核心是 Dynamic Human Layer：先判断你在聊天、写作、处理情绪、coding 还是 research，再动态调整语气、长度、结构、改写自由度和证据门槛。
+>
+> 聊天时少点客服腔；写作时保护原意；情绪场景控制建议的分量；coding 和 research 时要求先检查、选对来源、核验易变事实。这能减少一部分可避免的幻觉，但不会让模型获得它原本没有的搜索能力，也不保证所有答案正确。
 >
 > 目前 Codex 版测试得最完整，ChatGPT、Gemini、DeepSeek 还在收真实反馈。
 >
@@ -169,9 +178,9 @@ Check the community rules before posting. Lead with the observed problem and inv
 
 ## 知乎想法
 
-> “AI 味”很少来自某一个词。更常见的是整套动作：自动赞同、过度解释、平均分配篇幅、把改写磨得太顺、用流畅掩盖不确定。
+> “AI 味”很少来自某一个词。真正影响体验的是模型会不会看场合：聊天、写作、情绪支持、coding 和 research 需要不同的温度、结构、改写自由度与证据门槛。
 >
-> 我把这些失败拆成了可执行规则和对抗测试，做成 Calm Agent。它同时约束语气、语义保真和证据边界，支持多个模型入口。
+> 我把这个判断做成了 Calm Agent 的 Dynamic Human Layer。它每轮生成回答契约，同时约束语气、语义保真、来源匹配和不确定性，支持 Skill 与通用复制提示词两种入口。
 >
 > https://github.com/FMStupid173/calm-agent
 
@@ -183,7 +192,7 @@ Check the community rules before posting. Lead with the observed problem and inv
 
 **Someone says another project already does this**
 
-> 同类 humanizer 很多。Calm Agent 主要多做了三层：实时对话姿态、改写语义保真、coding/research 的证据边界。它是否真的更有用，还需要真实任务来验证。
+> 同类 humanizer 很多。Calm Agent 的差异是 Dynamic Human Layer：每一轮都根据场景、风险、情绪温度和改写自由度调整人味与证据门槛。它还包含写作语义保真，以及 coding/research 的来源匹配与核验规则。真实效果仍需要跨模型任务验证。
 
 **Someone asks whether it clones Claude**
 

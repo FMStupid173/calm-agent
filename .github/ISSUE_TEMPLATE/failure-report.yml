@@ -1,5 +1,5 @@
 name: Output failure report
-description: Share a minimal, redacted example where Calm Agent made the answer worse or failed to help.
+description: Share a redacted failure in dynamic routing, human cadence, semantic fidelity, source fit, or factual boundaries.
 title: "[Failure]: "
 body:
   - type: markdown
@@ -18,7 +18,7 @@ body:
     id: adapter
     attributes:
       label: Adapter or installation method
-      placeholder: adapters/chatgpt-strict.md
+      placeholder: adapters/universal-copy-paste-prompt.md
     validations:
       required: true
   - type: textarea
@@ -53,6 +53,8 @@ body:
         - Too cold or too therapeutic
         - Weak judgment
         - Unsupported or outdated claim
+        - Wrong or mismatched source
+        - Wrong moment routing or evidence level
         - Semantic rewrite drift
         - Privacy or boundary issue
         - Other
