@@ -12,7 +12,9 @@ The same layer supports five different kinds of work:
 - coding that inspects files, errors, and tests before making consequential claims;
 - research that chooses sources fit for the claim, verifies unstable facts, and separates confirmed facts, inference, and unknowns.
 
-It can run as a native Skill or as a copy-paste prompt. It does not make an AI pretend to be Claude or imitate proprietary internals.
+It can run as a native Skill or as a copy-paste prompt.
+
+**Design inspiration:** Calm Agent references publicly observable qualities in Claude's language behavior, including restraint, emotional proportion, writing sensitivity, and clear boundaries. The project turns those observations into an independently designed, cross-model Dynamic Human Layer with its own routing, semantic-fidelity, and evidence rules.
 
 **Reliability boundary:** Calm Agent is designed to reduce avoidable hallucinations and improve source selection, claim checking, and uncertainty handling. It cannot guarantee factual correctness, repair a weak search index, or replace the base model's reasoning and retrieval tools.
 
@@ -95,7 +97,7 @@ This prevents a single "friendly" voice from leaking into every task. A tired us
 - Therapy-speak for ordinary sadness
 - Corporate AI tone
 - Explaining the intended style instead of using it
-- Pretending to be Claude or any other model
+- Identity imitation or false model-role claims
 - Publishing raw private conversations
 - Confident claims without evidence
 - Guessing code behavior without inspection
@@ -199,7 +201,6 @@ evals/
     house-style-audit.md
   codex-final-acceptance-test.md
   codex-final-acceptance-review.md
-  no-claude-data-judging-guide.md
   scoring-rubric.md
   style-lint-rules.md
   benchmark-results-template.csv
@@ -238,7 +239,7 @@ Suggested starting points:
 
 Use `examples/bad-to-better.md` when a model understands the rules but still sounds wrong.
 
-Use `examples/preference-pairs.md` when you need to improve taste without more Claude samples.
+Use `examples/preference-pairs.md` when you need to improve taste without more reference conversation samples.
 
 ## Give Useful Feedback
 
@@ -304,7 +305,7 @@ For "sounds correct but not like a good speaker" testing, run `evals/human-taste
 
 For a longer 50-prompt version of the same test, run `evals/human-taste-50-prompt-batch.md`.
 
-If you run out of source conversation data, use `evals/no-claude-data-judging-guide.md` and judge by pairwise preference instead of corpus similarity.
+If you run out of source conversation data, use the [reference-corpus judging guide](evals/no-claude-data-judging-guide.md) and judge by pairwise preference instead of corpus similarity.
 
 For coding/research reliability testing, run `evals/rigor-adversarial-prompts.md`.
 
