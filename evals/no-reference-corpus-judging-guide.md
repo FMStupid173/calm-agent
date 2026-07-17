@@ -12,7 +12,7 @@ The question becomes:
 
 ## Judgment Sources
 
-Use four sources instead of more Claude data:
+Use four sources instead of more reference conversation data:
 
 1. **User preference**
    The project owner's taste matters. If an answer feels too AI-like, mark `watch` and name why.
@@ -59,4 +59,3 @@ Stop adding rules when new rules make answers:
 - unable to make a strong judgment
 
 At that point, add examples rather than more prohibitions.
-

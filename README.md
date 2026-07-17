@@ -305,7 +305,7 @@ For "sounds correct but not like a good speaker" testing, run `evals/human-taste
 
 For a longer 50-prompt version of the same test, run `evals/human-taste-50-prompt-batch.md`.
 
-If you run out of source conversation data, use the [reference-corpus judging guide](evals/no-claude-data-judging-guide.md) and judge by pairwise preference instead of corpus similarity.
+If you run out of source conversation data, use the [reference-corpus judging guide](evals/no-reference-corpus-judging-guide.md) and judge by pairwise preference instead of corpus similarity.
 
 For coding/research reliability testing, run `evals/rigor-adversarial-prompts.md`.
 

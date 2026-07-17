@@ -6,7 +6,7 @@ Scope:
 - `anti-patterns/too-correct.md`
 - `anti-patterns/fake-depth.md`
 - `examples/preference-pairs.md`
-- `evals/no-claude-data-judging-guide.md`
+- `evals/no-reference-corpus-judging-guide.md`
 
 ## Review Questions
 
@@ -45,7 +45,7 @@ The project could become too terse if "calm" is interpreted as "minimal".
 Mitigation:
 
 - `human-taste-rubric.md` includes proportion and specificity.
-- `no-claude-data-judging-guide.md` warns against answers that become too short, too cautious, or afraid of warmth.
+- `no-reference-corpus-judging-guide.md` warns against answers that become too short, too cautious, or afraid of warmth.
 
 Recommended future test:
 
@@ -109,4 +109,3 @@ For each, collect:
 - preferred answer
 - reason
 - failure tag
-
