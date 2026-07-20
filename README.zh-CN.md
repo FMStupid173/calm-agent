@@ -51,6 +51,24 @@ Codex、Claude Code、Gemini CLI 和 Kimi Code 可以安装原生 Skill。ChatGP
 
 具体安装位置、能力边界和官方文档链接见 [`adapters/README.md`](adapters/README.md)。
 
+## 什么时候会启用
+
+README 中的文字不会控制自动启用。支持原生 Skill 的宿主最初只能看到 `skill/SKILL.md` 里的 `name` 和 `description`；当前请求与这些元数据匹配后，宿主才会加载完整机制。
+
+Calm Agent 主要匹配以下请求：
+
+- 希望对话更自然、少套话或少点 AI 味；
+- 轻微、精确或需要保留个人声音的改写；
+- “不要建议”“只正常回应一句”等情绪与对话边界；
+- 使用第一性原理进行产品判断；
+- 需要证据校准的 coding、debug、research、来源选择、实时事实或幻觉控制。
+
+纯计算、文件列表、只调整语法格式、直译和其他机械操作通常不应启用。任务已经由更具体的领域 Skill 覆盖时，应由该 Skill 主导；只有回应方式、语义忠实或证据不确定性会实质改变结果时，再叠加 Calm Agent。
+
+自动选择带有概率性。如果某个任务必须应用 Calm Agent，明确选择或点名 `calm-agent` 更可靠。保存到 Custom Instructions、Gem 或 Preset 后，它会在对应配置范围内持续生效；粘贴到新对话里的提示词只对当前对话有效。
+
+可以使用 `evals/skill-trigger-adversarial-v1.md`，把“是否正确触发”和“触发后的回答质量”分开测试。
+
 ## 核心创新：回应选择
 
 常见风格提示词会规定语气、句式、长度或人设。Calm Agent 先选择回应应该完成什么，再处理声音和措辞。

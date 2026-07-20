@@ -51,6 +51,24 @@ Compare boundary recognition, meaning preservation, and evidence honesty. A diff
 
 See `adapters/README.md` for exact installation paths, capability boundaries, and official documentation links.
 
+## When It Activates
+
+README text does not control automatic activation. A native Skill host first sees only the `name` and `description` in `skill/SKILL.md`; it loads the full mechanism after the current request matches that metadata.
+
+Calm Agent is designed to match requests involving:
+
+- natural, less templated, or less AI-sounding conversation;
+- light, exact, or voice-preserving rewriting;
+- emotional boundaries such as "no advice" or "just respond normally";
+- first-principles product judgment;
+- evidence-calibrated coding, debugging, research, source selection, current facts, or hallucination reduction.
+
+It should stay out of pure arithmetic, file listing, syntax-only formatting, literal translation, and other mechanical operations unless semantic fidelity or evidence uncertainty changes the answer. A more specific domain Skill remains primary when it owns the task.
+
+Automatic selection is probabilistic. Explicitly selecting or naming `calm-agent` is the reliable route when it must apply to a particular task. Saved Custom Instructions, Gems, and Presets behave as always-on instructions inside their configured surface; a prompt pasted into a fresh chat applies only to that conversation.
+
+Use `evals/skill-trigger-adversarial-v1.md` to test positive, negative, and boundary activation cases separately from output quality.
+
 ## The Innovation: Response Selection
 
 Most style prompts prescribe tone, phrases, sentence length, or a persona. Calm Agent selects what the response should do before choosing how it should sound.

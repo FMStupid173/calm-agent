@@ -4,6 +4,12 @@ The complete `skill/` directory is compatible with Codex, Claude Code, Gemini CL
 
 Run commands from the repository root. Replace existing copies only when you intend to update Calm Agent.
 
+## Activation Model
+
+Native hosts use the `name` and `description` frontmatter to decide whether to load the Skill body. The description contains positive triggers, representative user phrases, and negative boundaries; automatic selection still depends on the host and is not guaranteed.
+
+Use explicit invocation when Calm Agent must apply to a task. Test automatic selection separately with `../evals/skill-trigger-adversarial-v1.md`; do not treat a good answer as proof that the Skill loaded.
+
 ## Codex
 
 User scope:
