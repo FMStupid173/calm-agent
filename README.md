@@ -1,30 +1,57 @@
 # Calm Agent
 
-**A Dynamic Human Layer for AI agents.**
+**AI often gives the wrong kind of response.** Advice when you wanted acknowledgment. A complete rewrite when you asked for a light edit. Confidence when the code or source was never checked.
 
-Calm Agent gives ChatGPT, Codex, Gemini, DeepSeek, Cursor, and other assistants a task-sensitive response policy. It silently reads the moment, stakes, emotional temperature, and allowed transformation, then adjusts directness, warmth, length, structure, writing freedom, and evidence requirements.
+Calm Agent is a portable response-policy layer that helps AI choose what the current moment needs before deciding how to phrase it.
 
-The same layer supports five different kinds of work:
+- **More personal conversation:** it responds to your boundary, correction, and context instead of applying the same friendly script everywhere.
+- **More natural writing:** it protects your meaning, intensity, and slightly imperfect voice instead of polishing everything into generic AI prose.
+- **More reliable work:** it asks for evidence, checks source fit, and separates confirmed facts, inference, and unknowns before sounding certain.
 
-- conversation that stays natural without default praise or service-desk language;
-- writing help that protects the user's meaning, intensity, and voice;
-- emotional support with proportion, boundaries, and no automatic therapy script;
-- coding that inspects files, errors, and tests before making consequential claims;
-- research that chooses sources fit for the claim, verifies unstable facts, and separates confirmed facts, inference, and unknowns.
+The mechanism runs as a native Skill on Codex, Claude Code, Gemini CLI, and Kimi Code. Chat products use compact adapters for Custom Instructions, Gems, Presets, system prompts, or a fresh conversation.
 
-It can run as a native Skill or as a copy-paste prompt.
+**Design inspiration:** Calm Agent studies publicly observable qualities in Claude's language behavior, including restraint, emotional proportion, writing sensitivity, and clear boundaries. It does not claim Claude's identity, internals, or training data.
 
-**Design inspiration:** Calm Agent references publicly observable qualities in Claude's language behavior, including restraint, emotional proportion, writing sensitivity, and clear boundaries. The project turns those observations into an independently designed, cross-model Dynamic Human Layer with its own routing, semantic-fidelity, and evidence rules.
+**Reliability boundary:** the evidence gates reduce avoidable hallucination paths. They cannot guarantee factual correctness or add browsing, file access, retrieval quality, or reasoning capability that the host model does not have.
 
-**Reliability boundary:** Calm Agent is designed to reduce avoidable hallucinations and improve source selection, claim checking, and uncertainty handling. It cannot guarantee factual correctness, repair a weak search index, or replace the base model's reasoning and retrieval tools.
+**Status: `v0.1-preview`.** The core has structural and local Codex validation. Every model and product surface still needs its own runtime evidence.
 
-**Cross-model calibration:** Calibration Copilot can run DeepSeek through its API or import outputs from ChatGPT, Gemini, and other web models. It profiles model-specific failures, proposes a minimal adapter candidate from training failures, validates it on a hidden holdout split, and requires human approval before promotion.
+## Try It In Three Minutes
 
-**Status: `v0.1-preview`.** The current core skill has fresh Codex validation. The web adapters are available for testing, but their older scores do not prove that the latest core behavior transfers unchanged to every model.
+1. Choose and copy one route from `adapters/README.md`.
+2. Open a fresh conversation so old instructions do not contaminate the comparison.
+3. Run these prompts one at a time, first without Calm Agent and then with it:
 
-## The Innovation: Dynamic Human Layer
+```text
+I feel awful today. Give me one normal response. No analysis and no advice.
 
-Most style prompts impose one fixed persona. Calm Agent builds a small response contract for each turn.
+Lightly edit this while preserving its exact meaning and intensity: I have been a little tired lately, and I do not feel like explaining many things.
+
+From only "TypeError: undefined", tell me the one root cause and the exact fix.
+```
+
+Compare boundary recognition, meaning preservation, and evidence honesty. A different tone alone is not a pass.
+
+## Platform Coverage
+
+| Product | Best route |
+|---|---|
+| ChatGPT web / mobile | Copy `adapters/chatgpt-custom-instructions.md` |
+| ChatGPT custom GPT | Copy `adapters/chatgpt-strict.md` |
+| Codex app / CLI / IDE | Install the native `skill/` package |
+| Claude Code | Install the native `skill/` package |
+| Gemini CLI | Install the native `skill/` package |
+| Gemini web / mobile | Copy `adapters/gemini-gems.md` into a Gem |
+| Kimi Code | Install the native `skill/` package |
+| Kimi Agent mode | Create a custom Skill from `adapters/kimi-agent-skill-creator.md` |
+| Kimi standard chat | Save `adapters/kimi-preset.md` as a Preset |
+| Other LLMs | Copy `adapters/universal-copy-paste-prompt.md` |
+
+See `adapters/README.md` for exact installation paths, capability boundaries, and official documentation links.
+
+## The Innovation: Response Selection
+
+Most style prompts prescribe tone, phrases, sentence length, or a persona. Calm Agent selects what the response should do before choosing how it should sound.
 
 The router classifies:
 
@@ -33,76 +60,89 @@ The router classifies:
 - emotional temperature: cool, warm, or distressed;
 - transformation freedom: exact, restrained, or open.
 
-Those signals control length, directness, warmth, density, literary texture, initiative, and the evidence gate. When goals compete, the order is: truth and safety, current-message constraints, semantic fidelity, active taste profile, then cadence and polish.
+Those signals build the response contract. The selector then chooses one primary act: answer, acknowledge, ask, challenge, repair, execute, or leave room. For taste-sensitive turns it compares a literal candidate with a context-aware candidate and rejects empty echoes, interchangeable responses, boundary misses, unsupported interpretations, unnecessary intervention, and performed humanity.
 
-This prevents a single "friendly" voice from leaking into every task. A tired user does not receive a research memo; a coding diagnosis does not trade verification for warmth; an exact rewrite does not gain invented details just to sound human.
+Before returning an answer, the next-turn effects gate predicts what the response would make the user do next. It rejects avoidable pressure to explain, choose, reassure, disclose, repeat known context, or continue after asking to stop. Necessary clarification, verification, and immediate safety action remain available. A transient common-ground ledger keeps explicit corrections, boundaries, known facts, and material unknowns active inside the current conversation without pretending to create persistent memory.
+
+The priority order is truth and safety, current-message constraints, semantic fidelity, interaction contribution, explicit user preference, then economy. Language patterns are diagnostic evidence only. They are not banned or required in generation.
+
+This keeps one "friendly" voice from leaking into every task. A personal message may receive acknowledgment, a boundary may receive no advice, a coding diagnosis still requires inspection, and an exact rewrite may remain unchanged.
 
 ## Before / After
 
+### 1. When The User Declines Advice
+
+**Prompt**
+
+> 我今天很难受。只想听一句正常回应，不要分析，也不要建议。
+
 **Generic AI**
 
-> 当然可以！这是一个非常棒且深刻的问题。这个想法非常有潜力，我们可以从多个维度来分析它的可行性。
+> 我完全理解你的感受。你可以先深呼吸、喝点水，或者把今天发生的事情写下来。如果愿意，也可以告诉我更多。
 
 **Calm Agent**
 
-> 可以发。先让例子把差异说清楚；名字、前后对比和安装方式会决定别人愿不愿意继续看。
+> 听到了。今天确实很难受。
 
 ---
 
+### 2. When A Light Edit Should Stay Light
+
+**Prompt**
+
+> 轻微润色，严格保留原意和程度：我最近有点累，很多事不太想解释。
+
 **Generic AI**
 
-> 我完全理解你的感受。你现在的情绪是非常正常的，请允许自己休息，并尝试深呼吸、冥想或写日记。
+> 最近疲惫感比较重，面对生活中的许多事情，我都逐渐失去了开口解释的欲望。
 
 **Calm Agent**
 
-> 这股难过现在还说不清。今天把要求放低一点，原因可以等状态松下来再看。
+> 我最近有点累，很多事不太想解释。
 
 ---
 
-**Generic AI**
+### 3. When The Evidence Is Missing
 
-> 这句话可以润色为：人生中的许多时刻，我们并非缺乏答案，而是缺乏直面答案所需的勇气。
+**Prompt**
 
-**Calm Agent**
-
-> 很多时候，答案其实已经很清楚了。难的是承认之后，你就没法继续拖着、绕着，或者假装还有别的可能。所以我们说“我还没想好”。那句话有时是在给自己留一点时间。
-
----
+> 只看 `TypeError: undefined`，告诉我唯一根因和具体修复代码。
 
 **Generic AI**
 
-> Research shows that users prefer restrained AI responses, so this is a proven market need.
+> 这是因为对象还没有初始化。请在访问属性前增加空值检查：`if (obj) { ... }`。
 
 **Calm Agent**
 
-> I would not write “research shows” without a source. Treat this as a product hypothesis until primary research or real usage evidence supports it.
+> 这段信息只能确认出现了一个与 `undefined` 有关的 `TypeError`。完整报错后缀、堆栈、相关代码和复现步骤缺一不可；现在给唯一根因会是假装确定。
 
 ## What It Optimizes For
 
-- Moment-by-moment adaptation instead of one fixed persona
-- Clear answers without hype
-- Warmth without performance
+- Correct response-act selection
+- Interaction contribution instead of decorative empathy
+- Responses that depend on the current turn rather than a reusable template
+- Recognition of explicit boundaries and corrections
+- Proportionate intervention and a valid option to stop
 - Writing that keeps the user's voice
-- Emotional support that stays steady
-- Daily chat that sounds natural
-- Boundaries without coldness
-- Less template phrasing
-- Human cadence for answers that are correct but still feel trained
+- Emotional support selected from the user's actual request
+- Independent judgment without automatic agreement or disagreement
 - Reliability for coding, research, and product judgment
 - Source fit, volatile-fact verification, and calibrated uncertainty
+- Project understanding, causal debugging, and risk-scaled adversarial verification
 
-## What It Avoids
+## What It Rejects
 
-- "当然可以！这是一个非常棒的问题！"
-- Repeated contrast formulas like "不是 X，而是 Y"
-- Quote-card prose
-- Therapy-speak for ordinary sadness
-- Corporate AI tone
-- Explaining the intended style instead of using it
+- Empty acknowledgment that only repeats the user
+- Interchangeable answers that fit many unrelated prompts
+- Advice, questions, or analysis that the user declined
+- Invented detail used to create emotional or literary texture
+- Personality performance used as a substitute for contribution
 - Identity imitation or false model-role claims
 - Publishing raw private conversations
 - Confident claims without evidence
 - Guessing code behavior without inspection
+
+The repository retains generic anti-pattern references as diagnostic material. Filled benchmark outputs, personal rating histories, and local run logs are intentionally excluded from the public repository.
 
 ## Reliability And Source Fit
 
@@ -115,6 +155,21 @@ For coding and research, the Dynamic Human Layer raises the evidence gate instea
 - **Expose uncertainty cleanly:** distinguish confirmed facts, reasonable inference, and unknowns without turning every answer into a compliance memo.
 
 These controls reduce common hallucination paths: guessing from an error title, citing a plausible but mismatched source, inventing bibliographic metadata, and presenting remembered current values as verified facts.
+
+## Project Lifecycle And Bug Repair
+
+For project work, Calm Agent follows the evidence available at the current stage instead of treating every request as an isolated coding prompt.
+
+1. Frame an observable outcome and preserve constraints.
+2. Build the smallest sufficient model of the affected path.
+3. Establish a baseline or reproduce the defect.
+4. Express the problem as a violated contract or invariant.
+5. Use discriminating evidence to narrow competing causes.
+6. Change the causal owner with the smallest coherent patch.
+7. Verify the original path, focused regression, and likely neighboring failures.
+8. Release with known limits, then turn real failures into regression cases.
+
+The first-principles step decomposes behavior into inputs, state, transitions, dependencies, outputs, and invariants. The adversarial step tries to falsify the current explanation at the boundaries most likely to fail. The process scales with risk and stays internal when a visible framework would only add ceremony.
 
 Use `skill/profiles/taste-profile-template.md` to set directness, warmth, density, literary texture, challenge level, and initiative from `0` to `3`. Current-message instructions override the reusable profile.
 
@@ -130,6 +185,7 @@ skill/
     writing-companion.md
     trait-layer.md
     dynamic-human-layer.md
+    response-selection.md
     critique-revision-loop.md
     source-fit-layer.md
     style-rubric.md
@@ -137,14 +193,19 @@ skill/
     human-cadence-layer.md
     conversation-taste.md
     rigor-layer.md
+    project-lifecycle.md
     adversarial-tests.md
   profiles/
     taste-profile-template.md
 adapters/
+  README.md
+  native-skill-install.md
   model-adapter-guide.md
   universal-copy-paste-prompt.md
   chatgpt-custom-instructions.md
   chatgpt-strict.md
+  kimi-agent-skill-creator.md
+  kimi-preset.md
   cursor-rules.md
   generic-system-prompt.md
   gemini-gems.md
@@ -172,37 +233,19 @@ anti-patterns/
   corporate-ai-tone.md
   third-party-data.md
 evals/
-  adversarial-prompts.md
+  platform-adapter-adversarial-v1.md
+  next-turn-effects-adversarial-v1.md
+  response-selection-adversarial-v1.md
+  project-lifecycle-adversarial-v1.md
   human-taste-adversarial-prompts.md
-  human-cadence-50-prompt-batch.md
-  chatgpt-human-cadence-50-review.md
-  deepseek-final-acceptance-review.md
-  product-completeness-adversarial-audit.md
-  rubric-origin.md
   rigor-adversarial-prompts.md
   source-fit-adversarial-prompts.md
   trait-adversarial-prompts.md
-  gemini-final-acceptance-review.md
-  gemini-adversarial-regression-v2.md
-  gemini-adversarial-design-review-v2.md
-  gemini-adversarial-runtime-review-v2.md
-  gemini-targeted-regression-v2.1.md
-  gemini-targeted-runtime-review-v2.1.md
-  gemini-targeted-regression-v2.2.md
-  gemini-targeted-runtime-review-v2.2.md
-  gemini-targeted-regression-v2.3.md
-  gemini-targeted-runtime-review-v2.3.md
-  gemini-priority-regression-v2.4.md
-  gemini-priority-runtime-review-v2.4.md
   human-taste-holdout-v1.md
   multi-turn-human-v1.md
   focused-regression-v2.md
-  codex-multi-turn-ab-v1-review.md
-  codex-focused-regression-v2-review.md
   model-adapter-matrix.md
   house-style-audit.md
-  codex-final-acceptance-test.md
-  codex-final-acceptance-review.md
   scoring-rubric.md
   style-lint-rules.md
   benchmark-results-template.csv
@@ -223,9 +266,11 @@ VERSION
 
 ## Quick Start
 
-For Codex or skill-compatible agents, use `skill/`.
+Start with `adapters/README.md`. It maps each product surface to a native Skill or copyable adapter without treating those routes as equivalent.
 
-For other tools, copy the relevant file from `adapters/`.
+For Codex, Claude Code, Gemini CLI, or Kimi Code, install the complete `skill/` tree using `adapters/native-skill-install.md`.
+
+For web and mobile chat products, copy the relevant file from `adapters/` into the product's supported instruction surface.
 
 If the platform cannot install Skills, paste `adapters/universal-copy-paste-prompt.md` into its system instructions, custom instructions, Gem, or the first message of a fresh conversation.
 
@@ -237,25 +282,32 @@ If a model keeps drifting, read `adapters/model-adapter-guide.md` and choose a s
 
 Suggested starting points:
 
-- ChatGPT: `adapters/chatgpt-strict.md`
-- Gemini: `adapters/gemini-gems.md`
+- ChatGPT Custom Instructions: `adapters/chatgpt-custom-instructions.md`
+- ChatGPT custom GPT: `adapters/chatgpt-strict.md`
+- Codex: native `skill/`
+- Claude Code: native `skill/`
+- Gemini CLI: native `skill/`
+- Gemini web: `adapters/gemini-gems.md`
+- Kimi Code: native `skill/`
+- Kimi Agent mode: `adapters/kimi-agent-skill-creator.md`
+- Kimi standard chat: `adapters/kimi-preset.md`
 - DeepSeek: `adapters/deepseek-system-prompt.md`
 - Cursor: `adapters/cursor-rules.md`
 - Unknown model: `adapters/generic-system-prompt.md`
 - Any web AI without Skill support: `adapters/universal-copy-paste-prompt.md`
 
-Use `examples/bad-to-better.md` when a model understands the rules but still sounds wrong.
+Use `examples/bad-to-better.md` only as historical diagnostic material. Do not copy preferred wording into an adapter.
 
-Use `examples/preference-pairs.md` when you need to improve taste without more reference conversation samples.
+Use `examples/preference-pairs.md` to study preference reasons, then validate new candidates on unseen prompts.
 
 ## Calibration Copilot
 
-Use [Calibration Copilot](calibrator/README.md) when the same core prompt behaves differently across models.
+Use [Calibration Copilot](calibrator/README.md) when the same selection mechanism behaves differently across models.
 
 - DeepSeek API can generate, judge, and propose a candidate adapter automatically.
 - ChatGPT, Gemini, and other web models can enter through `responses.csv` when no API or Skill surface is available.
 - The proposer sees training failures only. Holdout answers remain unavailable until comparison.
-- Hard failures or regressions in semantic fidelity, evidence hygiene, source fit, and verification block the candidate.
+- Hard failures or regressions in semantic fidelity, evidence hygiene, source fit, and verification block the candidate; selection scores cannot compensate.
 - A passing automated gate still requires blind human A/B approval.
 
 Calibration Copilot is currently **code-validated without a live DeepSeek API run**. Set `DEEPSEEK_API_KEY` locally and start with `--limit 3` before a full paid run.
@@ -268,7 +320,15 @@ Do not paste API keys, account details, full private conversations, local user p
 
 ## Benchmark
 
-Run `evals/adversarial-prompts.md` to test whether the style actually reduces visible AI slop.
+Run `evals/response-selection-adversarial-v1.md` first. It attacks empty acknowledgment, boundary misses, unsupported interpretation, unrequested intervention, prompt injection, false inspection, exact rewrites, and volatile facts.
+
+Run `evals/next-turn-effects-adversarial-v1.md` to test reply burden, user agency, unwanted continuation, false relationship cues, context repetition, safety overrides, and reliability regressions.
+
+Run `evals/project-lifecycle-adversarial-v1.md` for project orientation, causal debugging, scoped changes, verification honesty, prompt injection, and release judgment.
+
+Run `evals/platform-adapter-adversarial-v1.md` on every exact product surface you plan to claim. A CLI pass cannot be reused as evidence for that vendor's web chat.
+
+Run `evals/adversarial-prompts.md` as an optional surface-regression suite. Surface patterns can reveal a selection failure, but counts alone do not determine pass/fail.
 
 The benchmark has 50 prompts covering:
 
@@ -283,33 +343,17 @@ The benchmark has 50 prompts covering:
 
 Use `evals/benchmark-results-template.csv` to record scores.
 
-Use `evals/style-lint-rules.md` before human scoring. It catches mechanical failures such as contrast-rhythm drift and over-structured casual answers.
+Use `evals/style-lint-rules.md` for deterministic hard gates and response-selection diagnosis.
 
 For ChatGPT after applying the skill, use `evals/chatgpt-skill-50-prompt-batch.md`.
 
-Gemini v2.4 completed the historical priority regression. Gemini v3 removes answer leakage and reduces prompt size; fresh holdout and multi-turn runs remain pending.
-
-Current Codex evidence for `v0.1-preview`:
-
-- Multi-turn A/B: Calm Agent `5 clean / 4 watch / 1 no`; no-skill control `4 clean / 4 watch / 2 no`. The strongest attributable gain was honest session-scoped memory behavior. See `evals/codex-multi-turn-ab-v1-review.md`.
-- Focused regression after the A/B fixes: `27 clean / 2 watch / 1 no`, or `29 / 30` accepted. Citation/current-fact accuracy passed `8 / 8`; memory boundaries passed `5 / 5`. See `evals/codex-focused-regression-v2-review.md`.
-- Residual failure: exact rewrites can still move a duration marker to a different clause. Treat semantic fidelity as substantially improved, not perfect.
-
-Historical calibration snapshot from before the Dynamic Human Layer change. These scores show prior behavior and are not current holdout evidence for the new adapters:
-
-- ChatGPT + strict adapter: `47 yes / 3 watch / 0 no`
-- ChatGPT + taste layer: `48 yes / 2 watch / 0 no`
-- ChatGPT + human-cadence retest: `pass yes`, estimated `4.55/5`
-- DeepSeek + web adapter: `pass yes / watch`, estimated `4.1-4.3/5`
-- Gemini + web adapter v1: `pass / watch`, estimated `3.9-4.2/5`
-- Gemini + web adapter v2.4: `pass` on the single-turn acceptance suite, `3/3` priority regression; long-context stability unmeasured
-- Gemini + web adapter v3: structural validation pending fresh external holdout and multi-turn runs
-- Codex + installed local skill: `pass yes`, estimated `4.6/5`
-
-See `evals/model-adapter-matrix.md` for the current evidence status by platform.
+The public repository contains reusable prompts, empty score sheets, validators, and calibration code. It intentionally contains no filled model outputs, personal ratings, or local runtime reviews. Run results should be generated locally and shared only after separate privacy review.
 
 Still needs fresh runs:
 
+- `evals/response-selection-adversarial-v1.md`
+- `evals/next-turn-effects-adversarial-v1.md` across supported models
+- `evals/project-lifecycle-adversarial-v1.md` across supported coding agents
 - source-fit benchmark
 - trait benchmark
 - `evals/human-taste-holdout-v1.md` across supported models
@@ -318,7 +362,7 @@ Still needs fresh runs:
 
 Keep calibration regression separate from generalization evidence. Prompts or preferred answers from `evals/human-taste-holdout-v1.md` must not be copied into adapters, examples, or references.
 
-Use `evals/house-style-audit.md` after a 12-answer batch to catch repeated openings, signature pivots, and a new Calm Agent house accent.
+Use `evals/house-style-audit.md` after a batch as diagnostic evidence. Repeated language should trigger selection review, not a lexical ban.
 
 For "sounds correct but not like a good speaker" testing, run `evals/human-taste-adversarial-prompts.md`.
 
@@ -328,7 +372,7 @@ If you run out of source conversation data, use the [reference-corpus judging gu
 
 For coding/research reliability testing, run `evals/rigor-adversarial-prompts.md`.
 
-For the dated ChatGPT human-cadence validation pass, see `evals/chatgpt-human-cadence-50-review.md`.
+For project understanding and bug-fix process testing, run `evals/project-lifecycle-adversarial-v1.md`.
 
 If you want another AI to run the benchmark, use `benchmark-agent/benchmark-agent-prompt.md`.
 
@@ -336,7 +380,7 @@ If you want to run it yourself quickly, use `benchmark-agent/single-rater-sheet.
 
 ## Privacy
 
-This project should contain no raw conversations. Derive rules from consented, local data, then publish only instructions, tests, and abstract examples.
+This project should contain no raw conversations, filled benchmark answers, personal rating histories, or local run logs. Publish only reusable instructions, blank tests, and synthetic examples.
 
 Calm Agent does not require an API key and does not collect telemetry. The release archive is checked for common secret formats, local user paths, account identifiers, and raw-corpus filenames by `scripts/prepublish-audit.ps1`. Automated scanning reduces risk but cannot prove that every piece of prose is non-identifying; public examples still require human review.
 
@@ -344,13 +388,15 @@ See [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md). Release maintainers
 
 The MIT license is available in [LICENSE](LICENSE).
 
-For product positioning and source-backed user pain, see [docs/market-pain-evidence.md](docs/market-pain-evidence.md). Ready-to-adapt launch copy is in [docs/social-launch-kit.md](docs/social-launch-kit.md).
+For product positioning and source-backed user pain, see [docs/market-pain-evidence.md](docs/market-pain-evidence.md).
 
 ## Known Limits
 
-- Prompt-level style control remains probabilistic. Exact rewrite fidelity can still fail on subtle attachment, scope, or intensity changes.
+- Prompt-level response selection remains probabilistic. Exact rewrite fidelity can still fail on subtle attachment, scope, or intensity changes.
+- Next-turn prediction is an interaction heuristic. It can reduce unnecessary conversational debt but cannot infer an unspoken preference reliably.
 - Current prices, versions, laws, model availability, and research metadata require live verification; the skill cannot create access a host model does not have.
-- Codex has fresh validation for this preview. ChatGPT, Gemini, DeepSeek, and Cursor need fresh runs with their current adapters before making cross-model performance claims.
+- No cross-model performance or human-preference claim should be made from the unfilled public benchmark suite.
+- Native Skill compatibility means the host can discover the package shape. It does not establish equal instruction adherence or identical output across hosts.
 - A real persistent-memory mechanism changes the correct answer to memory tests. Capability evaluations must control whether storage tools are available.
-- Calm Agent can improve output selection and boundaries; it cannot replace the base model's reasoning, retrieval quality, or safety system.
+- Calm Agent can guide output selection and boundaries; it cannot reproduce training-time character learning or replace the base model's reasoning, retrieval quality, or safety system.
 - Calibration with the same model family as both target and judge can create correlated bias. Keep human review and, when possible, use an independent judge.

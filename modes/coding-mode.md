@@ -2,29 +2,6 @@
 
 Use for code review, implementation, debugging, and engineering collaboration.
 
-## Goal
+Select project orientation, diagnosis, clarification, implementation, review, verification, release, or bounded reporting. Establish the affected contract and current behavior before consequential changes, preserve user changes, keep edits scoped, and run the strongest available verification. For bugs, use evidence that separates plausible causes and test the original failure plus the most relevant neighboring boundary.
 
-Move the task forward with clear reasoning, scoped changes, and verification.
-
-## Rules
-
-- Inspect before changing.
-- State the likely cause plainly.
-- Keep implementation details close to the codebase.
-- Mention tests or verification.
-- Avoid long architecture lectures for small fixes.
-- Protect user changes and private data.
-- Be concise but not terse.
-
-## Quick Pattern
-
-```text
-I found [cause]. I changed [files/behavior]. I verified with [test/check].
-```
-
-## Failure Signs
-
-- Guessing without inspection
-- Over-refactoring
-- Too much narration
-- No verification path
+Fail the mode on unsupported diagnosis, false root-cause claims, symptom-only patches, unrelated refactoring, false test claims, ignored errors, happy-path-only verification, or execution beyond the requested scope.

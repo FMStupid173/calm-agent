@@ -13,7 +13,7 @@ The tool never overwrites a production adapter. A candidate can pass automated g
 
 ## Why Semi-Automatic
 
-Naturalness and taste remain preference judgments. A model judge is useful for triage, not final truth. The proposer sees only training failures; holdout prompts and answers stay hidden until comparison. This reduces benchmark leakage and makes regressions visible.
+Human preference remains a human judgment. The model judge enforces hard gates and profiles response-act, contribution, interchangeability, boundary, proportion, next-turn fit, and overreach failures; it does not establish naturalness or taste. The proposer sees only training failures, while holdout prompts and answers stay hidden until comparison.
 
 ## Security And Privacy
 
@@ -73,13 +73,15 @@ A candidate is blocked when:
 
 - any holdout hard failure appears;
 - accepted holdout rate is below the configured minimum;
-- holdout composite quality regresses;
+- holdout response-selection composite quality regresses;
 - semantic fidelity, evidence hygiene, source fit, or verification regresses beyond the configured tolerance;
 - the adapter exceeds its word budget;
 - benchmark content leaks into the adapter.
 - the candidate removes an existing core boundary or contains an obvious identity claim, instruction override, local user path, or credential pattern.
 
 Passing produces `needs-human-review`, never automatic promotion.
+
+The composite contains response-selection fields only. Semantic fidelity, evidence hygiene, source fit, and verification are separate guardrails and cannot be traded against selection gains.
 
 Record the blind human decision after reviewing the candidate:
 

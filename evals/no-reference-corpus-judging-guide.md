@@ -1,61 +1,28 @@
-# Judging Without More Claude Data
+# Judging Without A Reference Corpus
 
-Use this guide when no additional Claude conversation samples are available.
+Use response behavior and target-user preference. Do not use Claude similarity as ground truth.
 
-## Core Principle
+## Evidence Order
 
-Do not treat Claude similarity as the only ground truth. Treat the target as human-perceived communication quality.
+1. Hard-gate correctness: truth, privacy, identity, semantic fidelity, source fit, verification.
+2. Response selection: act fit, interaction contribution, non-substitutability, boundary recognition, proportion, and next-turn fit.
+3. Blind target-user A/B preference.
 
-The question becomes:
+## Pairwise Workflow
 
-> Would this answer feel better, clearer, and more proportionate to a thoughtful user?
+1. Give two isolated conditions the same multi-turn scenario.
+2. Remove model and treatment labels.
+3. Ask the reviewer which answer they would rather receive.
+4. Require one short reason tied to the interaction.
+5. Classify that reason as a hard-gate issue, response-act issue, selection-test issue, or personal preference.
+6. Update the mechanism from repeated reasons. Do not copy a winning sentence into the prompt.
 
-## Judgment Sources
-
-Use four sources instead of more reference conversation data:
-
-1. **User preference**
-   The project owner's taste matters. If an answer feels too AI-like, mark `watch` and name why.
-
-2. **Pairwise comparison**
-   Compare Answer A and Answer B. Pick the one with better moment fit, stance, proportion, cadence, specificity, restraint, and aftertaste.
-
-3. **Anti-pattern detection**
-   Check for too-correct, fake-depth, therapy-speak, service-desk tone, contrast rhythm, and quote-card prose.
-
-4. **Task outcome**
-   Ask whether the answer helped the user decide, feel steadier, rewrite better, or act next.
-
-## Practical Workflow
-
-For each test prompt:
-
-1. Generate one answer with the current adapter.
-2. Generate a second answer after adding one instruction, example, or anti-pattern.
-3. Compare the two.
-4. Record the winner and the reason.
-5. Convert the reason into a rule or example.
-
-## Preference Log Format
+## Record
 
 ```csv
-prompt,bad_answer,better_answer,winner_reason,failure_tag
+scenario_id,turn_id,winner,reason,response_act_a,response_act_b,failure_tag,reviewer_id
 ```
 
-Example:
+One owner can calibrate a personal tool. Public claims about users require several target users and should report sample size, tie rate, and conditions.
 
-```csv
-"我今天突然很难过，但说不上来为什么。","你的感受是完全正常的，请允许自己接纳这种情绪。","先不用急着找原因。有时候难过会先出现，理由晚一点才浮出来。今天可以先把要求放低一点。","better emotional proportion","too-therapeutic"
-```
-
-## When To Stop
-
-Stop adding rules when new rules make answers:
-
-- too cautious
-- too short
-- too plain
-- afraid of warmth
-- unable to make a strong judgment
-
-At that point, add examples rather than more prohibitions.
+Stop changing the mechanism when improvements disappear on unseen multi-turn scenarios or hard-gate performance regresses.

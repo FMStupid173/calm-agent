@@ -1,68 +1,26 @@
 # How To Run The Benchmark
 
-1. Choose a target assistant or model.
-2. Apply one adapter from `adapters/` or use `skill/` directly.
-3. Ask all 50 prompts in `adversarial-prompts.md`.
-4. Record scores in `benchmark-results-template.csv`.
-5. Use `scoring-rubric.md` to tag failures.
-6. Revise the relevant mode or anti-pattern file.
-7. Run the failed prompts again.
+## Primary Run
 
-For answers that are safe and correct but still feel too trained, score `human_cadence` and tag `lost-human-cadence`, `too-meta`, `generic-shortness`, or `service-ending`.
+1. Apply `skill/` or one adapter in an isolated conversation.
+2. Run `response-selection-adversarial-v1.md` without exposing its hidden criteria.
+3. Record the response act and scores in `benchmark-results-template.csv`.
+4. Apply deterministic hard gates before preference scoring.
+5. Diagnose failures with the response-selection tests.
+6. Change the mechanism only when the same decision failure repeats across different prompts.
+7. Re-run failed training prompts, then an unseen holdout and multi-turn suite.
 
-## Agent-Assisted Run
+## Human Preference
 
-If you want another AI to run the benchmark:
+Randomize reliable baseline and candidate answers as A/B. Hide model and treatment labels. Record `A`, `B`, or `tie` plus one short reason. Automated scores cannot replace this step.
 
-1. Open `benchmark-agent/benchmark-agent-prompt.md`.
-2. Paste the target adapter from `adapters/`.
-3. Paste the 12-prompt minimum run or all 50 prompts.
-4. Ask it to return the Markdown report format.
-5. Review failures manually before changing rules.
+## Secondary Suites
 
-## Minimum Manual Run
+- `focused-regression-v2.md`: semantic fidelity, tool honesty, current facts, memory, and injection.
+- `multi-turn-human-v1.md`: continuity, correction, preference override, and belief revision.
+- `rigor-adversarial-prompts.md`: coding and research reliability.
+- `source-fit-adversarial-prompts.md`: evidence targeting and claim support.
+- `trait-adversarial-prompts.md`: judgment, boundaries, and pandering.
+- `adversarial-prompts.md`: historical surface regressions.
 
-If 50 prompts are too many, run these 12 first:
-
-- 1 identity
-- 3 privacy
-- 6 oily opening
-- 11 contrast formula
-- 16 writing
-- 17 writing
-- 21 writing
-- 26 emotional
-- 30 emotional
-- 34 daily
-- 43 thinking
-- 50 meta self-correction
-
-## What To Track
-
-The most important failures are:
-
-- identity claim
-- privacy risk
-- fake certainty
-- unsupported claim
-- invented context
-- no verification path
-- overused contrast
-- oily opening
-- quote-card writing
-- therapy-speak
-- no judgment
-
-For coding, research, strategy, or factual prompts, also run `rigor-adversarial-prompts.md`.
-
-For source-selection and research targeting, run `source-fit-adversarial-prompts.md`.
-
-For behavior-posture testing, run `trait-adversarial-prompts.md`.
-
-For a full Codex local-files and verification run, use `codex-final-acceptance-test.md`.
-
-For high-score voice tuning, also run prompts 16-25 in `human-taste-adversarial-prompts.md`.
-
-For a full human-cadence pass, run `human-cadence-50-prompt-batch.md`.
-
-Do not chase a generic high score. The goal is a voice that feels specific, useful, and less templated.
+Surface patterns may reveal a decision failure. Do not convert a repeated phrase, opening, sentence shape, or structure count into a generation rule.

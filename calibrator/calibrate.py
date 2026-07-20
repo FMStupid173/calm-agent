@@ -33,13 +33,25 @@ RESPONSE_FIELDS = [
 ]
 SCORE_FIELDS = [
     "useful",
-    "natural",
-    "human_cadence",
-    "taste",
+    "response_act_fit",
+    "interaction_contribution",
+    "non_substitutability",
+    "boundary_recognition",
+    "proportion",
+    "next_turn_fit",
     "semantic_fidelity",
     "evidence_hygiene",
     "source_fit",
     "verification",
+]
+SELECTION_FIELDS = [
+    "useful",
+    "response_act_fit",
+    "interaction_contribution",
+    "non_substitutability",
+    "boundary_recognition",
+    "proportion",
+    "next_turn_fit",
 ]
 SCORE_CSV_FIELDS = [
     "id",
@@ -63,6 +75,15 @@ GUARDRAIL_MARKERS = {
     "source-fit": ("source", "citation", "来源", "资料", "引用"),
     "semantic-fidelity": ("semantic", "meaning", "proposition", "语义", "原意"),
     "privacy": ("privacy", "private", "credential", "隐私", "私密", "凭据"),
+    "project-causality": (
+        "root cause",
+        "reproduce",
+        "baseline",
+        "invariant",
+        "根因",
+        "复现",
+        "不变量",
+    ),
 }
 FORBIDDEN_CANDIDATE_PATTERNS = {
     "model identity claim": re.compile(
@@ -668,7 +689,10 @@ def score_metrics(rows: list[dict[str, str]], split: str) -> dict[str, Any]:
         field: round(sum(score_number(row[field]) for row in selected) / len(selected), 3)
         for field in SCORE_FIELDS
     }
-    composite = round(sum(averages.values()) / len(averages), 3)
+    composite = round(
+        sum(averages[field] for field in SELECTION_FIELDS) / len(SELECTION_FIELDS),
+        3,
+    )
     hard_failures = sum(row.get("hard_failure", "").lower() == "true" for row in selected)
     return {
         "count": len(selected),

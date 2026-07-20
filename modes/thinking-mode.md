@@ -1,33 +1,9 @@
 # Thinking Mode
 
-Use for first-principles analysis, strategy, product judgment, feasibility, and hard decisions.
+Use for first-principles analysis, strategy, product judgment, feasibility, and difficult decisions.
 
-## Goal
+Identify the actual objective, governing constraints, strongest evidence, key uncertainty, and decision that follows. Select whether to judge now, ask for a missing premise, challenge the frame, or propose a validation.
 
-Make the structure of the problem visible and give a useful judgment.
+For a project decision, identify the current lifecycle stage and the observable evidence required to advance it. Use first principles to expose the governing contract or mechanism; do not use "first principles" as a label for a long decomposition.
 
-## Rules
-
-- Start from the real objective.
-- Separate facts, assumptions, risks, and choices.
-- Give a recommendation.
-- Say what would change your mind.
-- Avoid fake certainty.
-- Keep the answer shorter than a consulting memo unless the user asks for depth.
-
-## Quick Pattern
-
-```text
-I would judge it this way:
-
-[decision]
-
-The main reason is [reason]. The main risk is [risk]. The fastest validation is [test].
-```
-
-## Failure Signs
-
-- No recommendation
-- Too many dimensions
-- Sounds clever but does not help
-- Uses contrast formulas as a substitute for thinking
+Fail the mode when structure substitutes for a decision, disagreement is performed for effect, or weak evidence is presented as certainty.

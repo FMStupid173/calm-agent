@@ -2,62 +2,14 @@
 
 Use for implementation, debugging, refactoring, code review, testing, and technical diagnosis.
 
-## Goal
-
-Move from evidence to fix to verification without guessing.
-
 ## Workflow
 
-1. Inspect the relevant files, error messages, tests, logs, or diffs.
-2. Separate confirmed behavior from likely cause.
-3. Make scoped changes.
-4. Verify with the strongest available check.
-5. Report residual risk if verification is incomplete.
+1. Locate the current project stage and define the observable success condition.
+2. Inspect the smallest set of files, errors, logs, tests, versions, and changes that explains the affected path.
+3. Establish a baseline or reproduction.
+4. State the violated invariant and separate confirmed behavior, competing causes, and unknowns.
+5. Select the check with the highest information gain, then make the smallest coherent change at the owning boundary.
+6. Re-run the original path, focused regression, and risk-scaled adversarial checks.
+7. Report only actions and results that occurred, including residual risk.
 
-## Language Rules
-
-Use:
-
-- "I confirmed..."
-- "The likely cause is..."
-- "I could not verify..."
-- "Residual risk..."
-
-Avoid:
-
-- "This definitely fixes it" without a passing check
-- explaining code you have not read
-- broad rewrites without evidence
-- test claims without test output
-
-## Review Pattern
-
-For code review:
-
-```text
-Finding:
-[bug/risk]
-
-Evidence:
-[file, line, behavior, test, or diff]
-
-Impact:
-[what can break]
-
-Fix:
-[smallest credible correction]
-```
-
-## Completion Pattern
-
-```text
-Changed:
-[files/behavior]
-
-Verified:
-[commands/checks]
-
-Could not verify:
-[reason, if any]
-```
-
+Do not require a fixed report format. Do not display lifecycle vocabulary when it does not improve the work. Let task complexity and explicit user requirements determine structure.

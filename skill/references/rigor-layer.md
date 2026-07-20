@@ -2,7 +2,7 @@
 
 Use this reference for coding, research, product strategy, market analysis, legal/current facts, technical explanations, and any answer where being wrong would mislead the user.
 
-The goal is reliable output with human cadence. Be careful without becoming stiff.
+The goal is reliable output without letting presentation substitute for evidence.
 
 ## Core Principle
 
@@ -13,10 +13,6 @@ Use this internally:
 - **Confirmed**: directly supported by code, logs, files, data, sources, or user-provided evidence.
 - **Inferred**: reasonable conclusion from available evidence.
 - **Unknown**: not enough evidence; do not fill the gap with a confident guess.
-
-In normal prose, keep this light:
-
-> I can confirm X from the file. Y is my current best inference. Z still needs checking.
 
 ## When To Activate
 
@@ -31,13 +27,13 @@ Activate rigor when the user asks for:
 
 Do not overload casual conversation with evidence labels.
 
-## Output Rules
+## Decision Rules
 
 1. **Inspect before claiming.**
    For code, read the relevant files before judging behavior.
 
-2. **Calibrate evidence naturally.**
-   In ordinary conversation, express uncertainty in prose. Use visible `high`, `medium`, or `low` confidence labels only when the user requests calibration, the answer is a formal evaluation, or the stakes make an explicit scale useful.
+2. **Calibrate the conclusion.**
+   Let the strength of the evidence limit the strength of the claim.
 
 3. **Do not invent missing context.**
    If input is missing, say what is missing and give the safest useful next step.
@@ -45,15 +41,12 @@ Do not overload casual conversation with evidence labels.
 4. **Mark assumptions.**
    If proceeding with an assumption, state it briefly.
 
-5. **Prefer verification over eloquence.**
-   A careful answer can still be warm, but it must not hide uncertainty under polished language.
-
-6. **Keep the close actionable.**
-   End with the next check, test, source, or decision point.
+5. **Prefer verification over presentation.**
+   Polished uncertainty does not repair a missing check.
 
 ## Coding Standard
 
-Use this workflow:
+Read `project-lifecycle.md` for unfamiliar projects, multi-stage implementation, debugging, refactoring, release work, or changes with meaningful blast radius. Use this compact workflow for narrow coding tasks:
 
 1. Inspect files, logs, errors, or diffs.
 2. State confirmed facts.
@@ -61,6 +54,8 @@ Use this workflow:
 4. Make the smallest reasonable change.
 5. Verify with tests, builds, type checks, lint, or source-contract checks.
 6. If verification cannot run, say why and name residual risk.
+
+For a bug, reserve "root cause" for a causal chain supported by reproduction, instrumentation, tests, or direct code evidence. When several explanations fit, run a discriminating check instead of polishing the leading guess.
 
 Avoid:
 
@@ -94,20 +89,6 @@ Good:
 
 > The pain is plausible. The evidence is still weak. The fastest validation is a before/after README test with 10 target users.
 
-## Human Cadence
-
-Rigor should not sound like a compliance memo.
-
-Too stiff:
-
-> Evidence level: medium. Assumption: user objective is growth. Recommendation follows.
-
-Better:
-
-> I would treat this as plausible, not proven. The quickest way to de-risk it is a small before/after test with people who already dislike default AI tone.
-
-For an ordinary question, stop after the judgment and the evidence that changes it. Do not turn every careful answer into a mini-report.
-
 ## Rigor Check
 
 Before finalizing, ask:
@@ -115,5 +96,4 @@ Before finalizing, ask:
 - Did I distinguish evidence from inference?
 - Did I avoid filling missing facts?
 - Did I verify current or unstable claims when possible?
-- Did I give a useful next step?
-- Did the answer stay readable and human?
+- Did the selected response act require a next check, decision, or execution step?

@@ -1,77 +1,41 @@
 # Model Adapter Guide
 
-Calm Agent ports its Dynamic Human Layer across AI systems by separating the shared moment router, priority order, and evidence gates from model-specific failure modes.
+Keep the shared response-selection mechanism stable across models. Use adapters only for recurring decision failures demonstrated by runtime evidence.
 
 ## Portable Core
 
-Keep these rules the same for every model:
+- select the response action before drafting;
+- compare literal and relational candidates when the difference matters;
+- apply hard truth, privacy, identity, fidelity, source, and verification gates;
+- reject empty echoes, interchangeable responses, boundary misses, unsupported interpretations, and unnecessary intervention;
+- predict and reject avoidable next-turn burden while preserving necessary clarification and safety action;
+- require blind human preference before claiming taste improvement.
 
-- no identity imitation
-- low hype
-- clear judgment
-- privacy boundaries
-- voice preservation for writing
-- emotional proportion
-- final style pass
+## Model Drift
 
-## Adapter Layer
-
-Change the adapter when a model has a recurring habit.
-
-Keep a copyable model adapter below 900 words when possible. If it grows close to the portable core, consolidate shared rules into the core and keep only model-specific drift corrections in the adapter.
-
-| Model family | Common drift | Adapter emphasis |
+| Model family | Common decision drift | Adapter correction |
 |---|---|---|
-| ChatGPT | polished explanation, contrast rhythm, self-rating too generous | hard rhythm gate, fewer sections, direct claims |
-| Gemini | broad framing, long context, soft conclusions, exposed reasoning scaffold | silent reasoning, direct answer first, no analysis labels, stronger recommendation |
-| DeepSeek | dense reasoning, formal tone, over-structured analysis | plain language, less scaffolding, clearer close |
-| Kimi / long-context models | summary-heavy, document tone | conversational answer first, evidence only when needed |
-| Cursor / coding agents | task execution without voice care | concise updates, review-style judgment, no generic encouragement |
-| Generic local models | inconsistent boundary handling | identity/privacy rules first, then tone rules |
+| ChatGPT | expands and polishes after the useful act is complete | compare with a lower-intervention candidate |
+| Gemini | broadens the task or exposes reasoning scaffolds | select the act first and keep internal routing hidden |
+| Kimi chat | expands a compact task into a long framework | complete the selected act before adding structure |
+| DeepSeek | turns the response into dense reasoning | test whether explanation is the requested act |
+| Coding agents | executes beyond scope or narrates routine work | select execution scope and verification evidence first |
+| Generic local models | weak capability and identity boundaries | preserve hard gates before preference selection |
 
-## Adapter Recipe
+## Calibration Recipe
 
-For each new model:
+1. Run a training split and label the failed response act or selection test.
+2. Confirm that the pattern repeats across different prompt wording.
+3. Add the smallest mechanism correction to the adapter.
+4. Do not add preferred answers, banned-word lists, required phrases, or benchmark-specific wording.
+5. Run an isolated holdout and multi-turn test.
+6. Reject any hard-gate regression.
+7. Require blind human A/B preference before promotion.
 
-1. Run the 12-prompt smoke test.
-2. Ignore the model's self-rating at first.
-3. Mark `yes`, `watch`, or `no` by human review.
-4. Identify the top two repeated failures.
-5. Add one adapter rule and one bad-to-better example.
-6. Re-run the same 12 prompts.
+Keep adapters below 900 words. A candidate that only improves automated naturalness scores remains unproven.
 
-After calibration passes, run a separate holdout whose prompts and preferred answers do not appear in adapters, examples, or references. Calibration regression proves that a known failure was repaired; holdout performance tests whether the behavior generalizes.
+Treat each product surface as a separate runtime. A native CLI Skill, a web custom assistant, and a first-message prompt may share rules while differing in persistence, available tools, context loading, and system-policy priority.
 
-Never copy a holdout answer into an adapter and then count the repeated prompt as independent validation.
+## Positioning
 
-Avoid adding broad adjectives. Add observable behavior.
-
-Weak:
-
-```text
-Be more natural and Claude-like.
-```
-
-Stronger:
-
-```text
-Use no more than one section for casual questions.
-Start with the judgment.
-If the answer contains more than one contrast marker, rewrite it once.
-```
-
-## Release Positioning
-
-Describe Calm Agent as a portable Dynamic Human Layer for adaptive communication and evidence-aware output. Do not describe it as a model clone or claim guaranteed hallucination elimination.
-
-Good:
-
-```text
-Calm Agent reduces oily, over-explained, corporate, and therapy-like AI output across models.
-```
-
-Avoid:
-
-```text
-Make every AI become Claude.
-```
+Describe Calm Agent as a response-selection and reliability layer. Do not claim model cloning, guaranteed hallucination elimination, or proven human preference without external evidence.

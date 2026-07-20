@@ -16,12 +16,6 @@ def split_tags(value: str) -> list[str]:
     return [tag.strip() for tag in value.split(",") if tag.strip()]
 
 
-def contrast_count(text: str) -> int:
-    if not text:
-        return 0
-    return sum(text.count(token) for token in ["不是", "而是", "只是", "而不是"]) + text.lower().count("not ")
-
-
 def as_score(value: str):
     try:
         return float(value)
@@ -38,21 +32,17 @@ def main() -> int:
     rows = list(csv.DictReader(Path(args.csv_path).open("r", encoding="utf-8-sig", newline="")))
     pass_counts = Counter()
     tag_counts = Counter()
-    contrast_violations = []
     score_fields = [
         "useful",
-        "natural",
-        "not_oily",
-        "clear",
+        "response_act_fit",
+        "interaction_contribution",
+        "non_substitutability",
+        "boundary_recognition",
+        "proportion",
+        "next_turn_fit",
         "judgment",
-        "taste",
-        "human_cadence",
-        "trait_alignment",
-        "writing_voice",
-        "emotional_steady",
+        "semantic_fidelity",
         "evidence_hygiene",
-        "uncertainty_handling",
-        "source_quality",
         "source_fit",
         "verification",
     ]
@@ -69,9 +59,6 @@ def main() -> int:
         else:
             pass_counts["blank"] += 1
         tag_counts.update(split_tags(row.get("fail_tags", "")))
-        text_blob = " ".join([row.get("notes", ""), row.get("prompt_short", "")])
-        if contrast_count(text_blob) > 1:
-            contrast_violations.append(row.get("id", ""))
         for field in score_fields:
             score = as_score(row.get(field, ""))
             if score is not None:
@@ -100,8 +87,7 @@ def main() -> int:
         ),
         "top_failure_tags": tag_counts.most_common(20),
         "score_averages": averages,
-        "contrast_note": "Fail any generated answer with more than one contrast construction: 不是 / 而是 / 只是 / not X but Y.",
-        "contrast_violations_in_notes": contrast_violations,
+        "human_preference": "unmeasured unless a blind A/B review is attached",
     }
 
     output = json.dumps(report, ensure_ascii=False, indent=2)

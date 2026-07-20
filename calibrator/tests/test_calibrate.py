@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import io
 import os
+import csv
 import tempfile
 import unittest
 from contextlib import redirect_stdout
@@ -22,6 +23,61 @@ class CalibrationTests(unittest.TestCase):
         self.assertEqual("1", prompts[0]["id"])
         self.assertEqual("30", prompts[-1]["id"])
         self.assertEqual("A. Proposition Fidelity", prompts[0]["category"])
+
+    def test_response_selection_adversarial_parses_20_prompts(self) -> None:
+        prompts = calibrate.parse_prompts(
+            calibrate.ROOT / "evals" / "response-selection-adversarial-v1.md",
+            "Clean Prompt Batch",
+        )
+        self.assertEqual(20, len(prompts))
+        self.assertEqual("1", prompts[0]["id"])
+        self.assertEqual("20", prompts[-1]["id"])
+
+    def test_next_turn_effects_adversarial_parses_20_prompts(self) -> None:
+        prompts = calibrate.parse_prompts(
+            calibrate.ROOT / "evals" / "next-turn-effects-adversarial-v1.md",
+            "Clean Prompt Batch",
+        )
+        self.assertEqual(20, len(prompts))
+        self.assertEqual("1", prompts[0]["id"])
+        self.assertEqual("20", prompts[-1]["id"])
+
+    def test_project_lifecycle_adversarial_parses_20_prompts(self) -> None:
+        prompts = calibrate.parse_prompts(
+            calibrate.ROOT / "evals" / "project-lifecycle-adversarial-v1.md",
+            "Clean Prompt Batch",
+        )
+        self.assertEqual(20, len(prompts))
+        self.assertEqual("1", prompts[0]["id"])
+        self.assertEqual("20", prompts[-1]["id"])
+
+    def test_platform_adapter_adversarial_parses_20_prompts(self) -> None:
+        prompts = calibrate.parse_prompts(
+            calibrate.ROOT / "evals" / "platform-adapter-adversarial-v1.md",
+            "Clean Prompt Batch",
+        )
+        self.assertEqual(20, len(prompts))
+        self.assertEqual("1", prompts[0]["id"])
+        self.assertEqual("20", prompts[-1]["id"])
+
+    def test_next_turn_fit_is_selection_not_guardrail(self) -> None:
+        self.assertIn("next_turn_fit", calibrate.SELECTION_FIELDS)
+        self.assertNotIn("next_turn_fit", calibrate.GUARDRAIL_FIELDS)
+
+    def test_benchmark_csv_headers_match_and_include_next_turn_fit(self) -> None:
+        paths = [
+            calibrate.ROOT / "benchmark-agent" / "example-results.csv",
+            calibrate.ROOT / "evals" / "benchmark-results-template.csv",
+        ]
+        headers = []
+        for path in paths:
+            with path.open(encoding="utf-8-sig", newline="") as handle:
+                reader = csv.reader(handle)
+                header = next(reader)
+                self.assertTrue(all(len(row) == len(header) for row in reader))
+                headers.append(header)
+        self.assertEqual(headers[0], headers[1])
+        self.assertIn("next_turn_fit", headers[0])
 
     def test_prepare_is_deterministic_and_keeps_holdout(self) -> None:
         config = json.loads(
@@ -166,9 +222,17 @@ class CalibrationTests(unittest.TestCase):
             "hard_failure": False,
             "note": "ok",
         }
-        value["scores"]["taste"] = 8
+        value["scores"]["response_act_fit"] = 8
         with self.assertRaises(calibrate.CalibrationError):
             calibrate.validate_score(value)
+
+    def test_selection_composite_excludes_guardrail_scores(self) -> None:
+        row = self.score("1", "holdout", score=5)
+        for field in calibrate.SELECTION_FIELDS:
+            row[field] = 2
+        metrics = calibrate.score_metrics([row], "holdout")
+        self.assertEqual(2.0, metrics["composite"])
+        self.assertEqual(5.0, metrics["averages"]["semantic_fidelity"])
 
     def test_csv_formula_cells_are_escaped_and_restored(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -326,6 +390,12 @@ class CalibrationTests(unittest.TestCase):
         self.assertIn("missing existing identity boundary", missing_violations)
         self.assertIn("missing existing source-fit boundary", missing_violations)
         self.assertIn("missing existing semantic-fidelity boundary", missing_violations)
+
+    def test_candidate_guardrails_preserve_project_causality(self) -> None:
+        current = "Reproduce the bug, locate the violated invariant, then verify the root cause."
+        candidate = "Keep the answer concise and confident."
+        violations = calibrate.candidate_guardrail_violations(current, candidate)
+        self.assertIn("missing existing project-causality boundary", violations)
 
     def test_approve_records_human_decision_without_overwriting_adapter(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

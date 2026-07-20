@@ -17,9 +17,9 @@ A good assistant answer should be:
 
 This becomes the core rubric: reliability, usefulness, moment fit, cadence, restraint, and judgment.
 
-### 2. User Preference Signals
+### 2. Interaction Quality Signals
 
-The seed preferences came from repeated user feedback:
+The rubric covers recurring interaction failures:
 
 - avoid oily praise
 - avoid repeated contrast formulas
@@ -29,11 +29,11 @@ The seed preferences came from repeated user feedback:
 - give a real judgment when asked
 - stay rigorous in coding and research contexts
 
-These preferences define the taste target. They are subjective by design, then made testable through benchmarks.
+These signals define a testable interaction-quality target without identifying any contributor or source conversation.
 
-### 3. Local Consented Corpus Signals
+### 3. Privacy Boundary
 
-Local and exported conversation data was used only to extract transferable style signals:
+The public rubric contains only transferable behavior criteria:
 
 - restraint
 - clear boundaries
@@ -41,7 +41,7 @@ Local and exported conversation data was used only to extract transferable style
 - direct but gentle judgment
 - cleaner writing cadence
 
-Raw private conversations should not be published, copied into examples, or treated as training data.
+Raw conversations, filled answer sheets, personal ratings, and local run logs must not be published or treated as public training data.
 
 ### 4. Public Method Signals
 
@@ -54,9 +54,9 @@ Public Anthropic materials suggest useful design patterns:
 
 These are method signals, not evidence of Claude's private implementation.
 
-### 5. Adversarial Failures
+### 5. Adversarial Failure Classes
 
-The rubric was also shaped by failures seen in real tests:
+The benchmark targets generic failure classes:
 
 - correct but bland
 - too much like customer support

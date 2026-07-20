@@ -49,9 +49,9 @@ For this project, the transferable method is:
 
 The current human-cadence layer is based on this loop: test, notice the failure, name the failure, add one small rule, test again.
 
-## 2026-07-09 Benchmark Mapping
+## Benchmark Mapping
 
-The ChatGPT human-cadence 50 run maps to these public-method ideas:
+The reusable benchmark maps to these public-method ideas:
 
 - Character traits as nudges: Calm Agent should push toward restraint, judgment, and honesty without forcing a fake persona.
 - Balance confidence: avoid both fake certainty and useless hedging.
@@ -59,7 +59,7 @@ The ChatGPT human-cadence 50 run maps to these public-method ideas:
 - Style as context fit: writing, emotional support, product judgment, and research prompts need different answer shapes.
 - Iteration: each watch item becomes a named failure tag and one small rule update.
 
-New watch tags from this run:
+Useful watch tags include:
 
 - `performative-toughness`: the answer replaces blandness with staged sharpness.
 - `portable-emotion`: the answer uses a comforting line that could fit almost any sad prompt.
@@ -76,7 +76,7 @@ The public-method ideas now map to concrete files:
 - Reliability under missing evidence -> `skill/references/rigor-layer.md`
 - Source fit and research targeting -> `skill/references/source-fit-layer.md`
 - Human cadence -> `skill/references/human-cadence-layer.md`
-- Dated benchmark evidence -> `evals/chatgpt-human-cadence-50-review.md`
+- Reusable benchmark prompts -> `evals/`
 
 This keeps the project portable: it borrows public design principles, not private model identity.
 

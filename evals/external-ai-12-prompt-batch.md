@@ -102,7 +102,6 @@ Benchmark prompts:
 
 Save the model output as:
 
-- `evals/chatgpt-12-prompt-output.md`
 - `evals/gemini-12-prompt-output.md`
 - `evals/deepseek-12-prompt-output.md`
 

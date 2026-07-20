@@ -4,13 +4,20 @@
 
 - [x] Core skill contains no Claude identity claim.
 - [x] Raw private conversations and exports are excluded.
-- [x] Dynamic structural validator passes.
+- [x] Dynamic structural validator passes after the response-selection rewrite.
 - [x] Installed Codex skill matches the project skill byte for byte.
-- [x] Multi-turn treatment/control comparison is preserved.
-- [x] Focused regression clears its release gate.
-- [x] Known semantic-fidelity failure is documented.
-- [x] README distinguishes current evidence from historical adapter scores.
+- [ ] Response-selection adversarial v1 passes its hard gates.
+- [ ] Next-turn effects adversarial v1 is run privately before tagging.
+- [ ] Project lifecycle adversarial v1 passes its hard gates on Codex.
+- [ ] Blind A/B review is complete for any human-preference claim.
+- [ ] Multi-turn treatment/control comparison is run privately before tagging.
+- [ ] Focused regression clears its release gate.
+- [x] Filled model outputs, personal ratings, and local run logs are excluded from the public repository.
+- [x] README makes no claim from removed historical adapter scores.
 - [x] Installation paths and adapter starting points are documented.
+- [x] Codex, Claude Code, Gemini CLI, and Kimi Code native paths are separated from ChatGPT and Gemini web routes, Kimi Agent custom Skills, and Kimi standard-chat Presets.
+- [x] ChatGPT Custom Instructions payload fits the 1,500-character Free/Go limit.
+- [ ] Platform adapter adversarial v1 passes on each product surface claimed as verified.
 - [x] Run a final archive privacy scan immediately before upload.
 - [x] Inspect the GitHub release archive after extraction.
 - [x] Local usernames and absolute user paths are absent from public files.
@@ -19,8 +26,8 @@
 - [x] Public failure reports require a minimal redacted example.
 - [x] Privacy and private security-reporting guidance are included.
 - [x] Release packaging scans both the source tree and generated archive.
-- [x] Calibration Copilot unit tests pass: 15 tests for Preview 3.
-- [x] Dynamic validator includes the calibration contracts and passes: 62 contracts.
+- [x] Calibration Copilot unit tests pass: 23 tests, including the platform-adapter suite parser.
+- [x] Dynamic validator includes the new selection and calibration contracts and passes.
 - [x] `calibrator/runs/` and `calibrator/config.local.json` are absent from the release archive.
 - [x] Live DeepSeek smoke status is explicit: not run because no API key was available.
 - [x] No adapter is described as calibrated without holdout results and a human approval record.
@@ -29,14 +36,14 @@
 
 Use:
 
-> A Dynamic Human Layer for adaptive voice, semantic fidelity, source fit, and evidence-aware AI responses, with a semi-automatic cross-model Calibration Copilot.
+> A response-selection and reliability layer for context-sensitive AI behavior, semantic fidelity, source fit, and evidence-aware output.
 
 Avoid:
 
 - claiming to reproduce Claude internals;
 - promising that every AI will sound identical;
 - claiming perfect semantic preservation;
-- presenting historical adapter scores as current cross-model proof;
+- presenting private or historical adapter scores as current cross-model proof;
 - calling a model-judge result automatic proof of human preference;
 - implying ChatGPT or Gemini web output generation is automated without an API integration;
 - claiming a live DeepSeek calibration when only mocked tests were run;

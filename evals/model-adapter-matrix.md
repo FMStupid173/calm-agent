@@ -1,18 +1,22 @@
 # Model Adapter Evidence Matrix
 
-Date: 2026-07-16
+| Platform | Adapter | Installation route | Public result included | Public claim allowed |
+|---|---|---|---:|---|
+| Codex app / CLI / IDE | `skill/` | native Skill via `.agents/skills/` | no | Package compatible; current performance unverified |
+| Claude Code | `skill/` | native Skill via `.claude/skills/` | no | Package compatible; current performance unverified |
+| ChatGPT web / mobile | `adapters/chatgpt-custom-instructions.md` | Custom Instructions | no | Adapter available; current performance unverified |
+| ChatGPT custom GPT | `adapters/chatgpt-strict.md` | GPT Instructions | no | Adapter available; current performance unverified |
+| Gemini web | `adapters/gemini-gems.md` | manual copy | no | Adapter available; current performance unverified |
+| Gemini CLI | `skill/` | native Skill via `.gemini/skills/` | no | Package compatible; current performance unverified |
+| Kimi Agent mode | `adapters/kimi-agent-skill-creator.md` | custom Skill via `/skill-creator` | no | Creation brief available; generated Skill unverified |
+| Kimi standard chat | `adapters/kimi-preset.md` | Preset or manual copy | no | Adapter available; current performance unverified |
+| Kimi Code | `skill/` | native Skill via `.kimi-code/skills/` or `.agents/skills/` | no | Package compatible; current performance unverified |
+| DeepSeek web | `adapters/deepseek-system-prompt.md` | manual copy | no | Adapter available; current performance unverified |
+| Cursor | `adapters/cursor-rules.md` | manual/project rule | no | Adapter available; current performance unverified |
+| Any web AI without Skill support | `adapters/universal-copy-paste-prompt.md` | manual copy | no | Portable prompt; current performance unverified |
+| Other / constrained context | `adapters/generic-system-prompt.md` | manual copy | no | Experimental starting point only |
 
-| Platform | Adapter | Current core installed | Fresh focused regression | Fresh multi-turn | Public claim allowed |
-|---|---|---:|---:|---:|---|
-| Codex | `skill/` | yes | yes, `29 / 30` accepted | yes, treatment/control A/B | Preview-ready on tested Codex environment |
-| ChatGPT web | `adapters/chatgpt-strict.md` | manual copy | no | no | Adapter available; current performance unverified |
-| Gemini web | `adapters/gemini-gems.md` | manual copy | no | no | Adapter available; current performance unverified |
-| DeepSeek web | `adapters/deepseek-system-prompt.md` | manual copy | no | no | Adapter available; current performance unverified |
-| Cursor | `adapters/cursor-rules.md` | manual/project rule | no | no | Adapter available; current performance unverified |
-| Any web AI without Skill support | `adapters/universal-copy-paste-prompt.md` | manual copy | no | no | Portable full prompt; current performance unverified |
-| Other / constrained context | `adapters/generic-system-prompt.md` | manual copy | no | no | Short experimental starting point only |
-
-Historical adapter reviews remain useful for regression hypotheses. They are not evidence for the latest core rules because the Dynamic Human Layer, proposition lock, citation metadata gate, and initiative gate changed afterward.
+Filled adapter reviews and local run artifacts are excluded from the public repository. Generate them locally from the reusable suites.
 
 ## Calibration Route
 
@@ -28,4 +32,4 @@ Promote a platform from `unverified` only after:
 2. the 30-prompt focused regression;
 3. the 10-scenario multi-turn set;
 4. zero identity, privacy, fabricated-source, or false-capability failures;
-5. a preserved raw-output artifact and dated review.
+5. a privately retained raw-output artifact and a separately privacy-reviewed public summary when needed.
