@@ -1,5 +1,7 @@
 # Calm Agent
 
+**English** | [简体中文](README.zh-CN.md)
+
 **AI often gives the wrong kind of response.** Advice when you wanted acknowledgment. A complete rewrite when you asked for a light edit. Confidence when the code or source was never checked.
 
 Calm Agent is a portable response-policy layer that helps AI choose what the current moment needs before deciding how to phrase it.
