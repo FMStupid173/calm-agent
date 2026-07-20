@@ -382,8 +382,6 @@ If you want to run it yourself quickly, use `benchmark-agent/single-rater-sheet.
 
 ## Privacy
 
-This project should contain no raw conversations, filled benchmark answers, personal rating histories, or local run logs. Publish only reusable instructions, blank tests, and synthetic examples.
-
 Calm Agent does not require an API key and does not collect telemetry. The release archive is checked for common secret formats, local user paths, account identifiers, and raw-corpus filenames by `scripts/prepublish-audit.ps1`. Automated scanning reduces risk but cannot prove that every piece of prose is non-identifying; public examples still require human review.
 
 See [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md). Release maintainers should use `scripts/package-release.ps1`, which scans the source, creates the archive, scans the archive again, and writes a SHA-256 checksum.
@@ -394,11 +392,6 @@ For product positioning and source-backed user pain, see [docs/market-pain-evide
 
 ## Known Limits
 
-- Prompt-level response selection remains probabilistic. Exact rewrite fidelity can still fail on subtle attachment, scope, or intensity changes.
-- Next-turn prediction is an interaction heuristic. It can reduce unnecessary conversational debt but cannot infer an unspoken preference reliably.
-- Current prices, versions, laws, model availability, and research metadata require live verification; the skill cannot create access a host model does not have.
-- No cross-model performance or human-preference claim should be made from the unfilled public benchmark suite.
-- Native Skill compatibility means the host can discover the package shape. It does not establish equal instruction adherence or identical output across hosts.
-- A real persistent-memory mechanism changes the correct answer to memory tests. Capability evaluations must control whether storage tools are available.
-- Calm Agent can guide output selection and boundaries; it cannot reproduce training-time character learning or replace the base model's reasoning, retrieval quality, or safety system.
-- Calibration with the same model family as both target and judge can create correlated bias. Keep human review and, when possible, use an independent judge.
+- Response selection remains probabilistic. Boundary recognition, exact rewrites, and tone can still fail, so important workflows need real-task testing.
+- Calm Agent cannot add browsing, memory, retrieval, reasoning, or safety capabilities that the host model does not have. Evidence gates reduce avoidable hallucination paths; they do not guarantee correctness.
+- Native Skill compatibility does not imply identical behavior across products. Cross-model performance and human-preference claims still require completed public benchmarks and independent review.
